@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import FontManager from "./components/FontManager";
 import Header from "../dashboard/components/Header";
 import { useLayout } from "../context/LayoutContext";
 import { useCustomLayout } from "./hooks/useCustomLayout";
-import { useFontManagement } from "./hooks/useFontManagement";
 import { useFileUpload } from "./hooks/useFileUpload";
 import { useSlideProcessing } from "./hooks/useSlideProcessing";
 import { useLayoutSaving } from "./hooks/useLayoutSaving";
@@ -28,17 +26,13 @@ const CustomTemplatePage = () => {
   const { hasRequiredKey, isRequiredKeyLoading } = useAPIKeyCheck();
   const { selectedFile, handleFileSelect, removeFile } = useFileUpload();
   const { slides, setSlides, completedSlides } = useCustomLayout();
-  const { fontsData, UploadedFonts, uploadFont, removeFont, getAllUnsupportedFonts, setFontsData } = useFontManagement();
   const { isProcessingPptx, processFile, retrySlide,processSlideToHtml } = useSlideProcessing(
     selectedFile,
     slides,
-    setSlides,
-    setFontsData
+    setSlides
   );
   const { isSavingLayout, isModalOpen, openSaveModal, closeSaveModal, saveLayout } = useLayoutSaving(
     slides,
-    UploadedFonts,
-    fontsData,
     refetch,
     setSlides
   );
@@ -124,17 +118,6 @@ const CustomTemplatePage = () => {
           completedSlides={completedSlides}
         />
 
-        {/* Global Font Management */}
-        {fontsData && (
-          <FontManager
-            fontsData={fontsData}
-            UploadedFonts={UploadedFonts}
-            uploadFont={uploadFont}
-            removeFont={removeFont}
-            getAllUnsupportedFonts={getAllUnsupportedFonts}
-            processSlideToHtml={()=>handleProcessSlideToHtml(slides[0])}
-          />
-        )}
 
         {/* Slides Section */}
         {slides.length > 0 && (
@@ -177,5 +160,6 @@ const CustomTemplatePage = () => {
 };
 
 export default CustomTemplatePage;
+
 
 
