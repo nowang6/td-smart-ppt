@@ -27,7 +27,6 @@ import MarkdownRenderer from "./MarkdownRenderer";
 import { getIconFromFile } from "../../utils/others";
 import { ChevronRight, PanelRightOpen, X } from "lucide-react";
 import ToolTip from "@/components/ToolTip";
-import Header from "@/app/(presentation-generator)/dashboard/components/Header";
 import { trackEvent, MixpanelEvent } from "@/utils/mixpanel";
 
 // Types
@@ -263,7 +262,6 @@ const DocumentsPreviewPage: React.FC = () => {
         showProgress={showLoading.progress}
         duration={showLoading.duration}
       />
-      <Header />
       <div className="flex mt-6 gap-4 font-instrument_sans">
         {!isOpen && (
           <div className="fixed left-4 top-1/2 -translate-y-1/2 z-50">
