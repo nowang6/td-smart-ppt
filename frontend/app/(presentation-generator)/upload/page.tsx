@@ -22,7 +22,7 @@ const page = () => {
     <div className="relative">
       <div className="flex flex-col items-center justify-center  py-8">
         <h1 className="text-3xl font-semibold font-instrument_sans">
-          创建演示文稿{" "}
+          创建幻灯片{" "}
         </h1>
         {/* <p className='text-sm text-gray-500'>We will generate a presentation for you</p> */}
       </div>

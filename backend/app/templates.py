@@ -51,3 +51,24 @@ outline_dict = StructuredDict(
     }
 
 )
+
+# 用于演示文稿结构的模板，返回布局索引数组
+structure_dict = StructuredDict(
+    {
+        "properties": {
+            "slides": {
+                "description": "List of slide layout indexes",
+                "items": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "type": "array"
+            }
+        },
+        "required": [
+            "slides"
+        ],
+        "title": "PresentationStructureModel",
+        "type": "object"
+    }
+)

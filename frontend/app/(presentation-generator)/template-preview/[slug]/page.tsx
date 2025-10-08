@@ -13,7 +13,6 @@ import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-markup";
 import "prismjs/components/prism-jsx";
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { useFontLoader } from "../../hooks/useFontLoader";
 import { trackEvent, MixpanelEvent } from "@/utils/mixpanel";
 
 const GroupLayoutPreview = () => {
@@ -32,9 +31,8 @@ const GroupLayoutPreview = () => {
   const [currentCode, setCurrentCode] = useState("");
   const [currentLayoutName, setCurrentLayoutName] = useState("");
   const [currentLayoutId, setCurrentLayoutId] = useState("");
-  const [currentFonts, setCurrentFonts] = useState<string[] | undefined>(undefined);
   const [isSaving, setIsSaving] = useState(false);
-  const [layoutsMap, setLayoutsMap] = useState<Record<string, { layout_id: string; layout_name: string; layout_code: string; fonts?: string[] }>>({});
+  const [layoutsMap, setLayoutsMap] = useState<Record<string, { layout_id: string; layout_name: string; layout_code: string }>>({});
   const [templateMeta, setTemplateMeta] = useState<{ name?: string; description?: string } | null>(null);
 
  
@@ -46,22 +44,18 @@ const GroupLayoutPreview = () => {
         const res = await fetch(`/api/v1/ppt/template-management/get-templates/${presentationId}`);
         if (!res.ok) return;
         const data = await res.json();
-        const map: Record<string, { layout_id: string; layout_name: string; layout_code: string; fonts?: string[] }> = {};
+        const map: Record<string, { layout_id: string; layout_name: string; layout_code: string }> = {};
         for (const l of data.layouts || []) {
           map[l.layout_name] = {
             layout_id: l.layout_id,
             layout_name: l.layout_name,
             layout_code: l.layout_code,
-            fonts: l.fonts,
           };
         }
         setLayoutsMap(map);
-        // Set template meta and inject aggregated fonts if provided
+        // Set template meta
         if (data?.template) {
           setTemplateMeta({ name: data.template.name, description: data.template.description });
-        }
-        if (Array.isArray(data?.fonts) && data.fonts.length) {
-          useFontLoader(data.fonts);
         }
       } catch (e) {
         // noop
@@ -82,15 +76,6 @@ const GroupLayoutPreview = () => {
     }
   }, [slug]);
 
-  // Ensure fonts are injected if layoutsMap changes dynamically
-  useEffect(() => {
-    if (!isCustom) return;
-    const allFonts: string[] = [];
-    Object.values(layoutsMap).forEach((entry) => {
-      (entry.fonts || []).forEach((f) => allFonts.push(f));
-    });
-    if (allFonts.length) useFontLoader(allFonts);
-  }, [layoutsMap, isCustom]);
 
   // Handle loading state
   if (loading) {
@@ -119,9 +104,6 @@ const GroupLayoutPreview = () => {
     setCurrentLayoutName(entry.layout_name);
     setCurrentLayoutId(entry.layout_id);
     setCurrentCode(entry.layout_code || "");
-    setCurrentFonts(entry.fonts);
-    // Make sure fonts for this layout are loaded before editing
-    useFontLoader(entry.fonts || []);
     setEditorOpen(true);
   };
 
@@ -142,7 +124,6 @@ const GroupLayoutPreview = () => {
             layout_id: currentLayoutId,
             layout_name: currentLayoutName,
             layout_code: currentCode,
-            fonts: currentFonts,
           },
         ],
       };
@@ -159,7 +140,6 @@ const GroupLayoutPreview = () => {
           layout_id: currentLayoutId,
           layout_name: currentLayoutName,
           layout_code: currentCode,
-          fonts: currentFonts,
         },
       }));
       await refetch();

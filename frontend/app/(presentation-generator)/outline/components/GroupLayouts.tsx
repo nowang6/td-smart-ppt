@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { trackEvent, MixpanelEvent } from "@/utils/mixpanel";
 import { LayoutGroup } from "../types/index";
 import { useLayout } from "../../context/LayoutContext";
-import { useFontLoader } from "../../hooks/useFontLoader";
 interface GroupLayoutsProps {
   group: LayoutGroup;
   onSelectLayoutGroup: (group: LayoutGroup) => void;
@@ -18,8 +17,6 @@ const GroupLayouts: React.FC<GroupLayoutsProps> = ({
 }) => {
   const { getFullDataByGroup,getCustomTemplateFonts } = useLayout();
   const layoutGroup = getFullDataByGroup(group.id);
-  const fonts = getCustomTemplateFonts(group.id.split("custom-")[1]);
-  useFontLoader(fonts || []);
   const pathname = usePathname();
   return (
     <div

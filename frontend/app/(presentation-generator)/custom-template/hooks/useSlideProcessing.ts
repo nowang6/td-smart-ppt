@@ -1,14 +1,12 @@
 import { useState, useCallback } from "react";
 import { toast } from "sonner";
 import { ApiResponseHandler } from "@/app/(presentation-generator)/services/api/api-error-handler";
-import { ProcessedSlide, SlideData, FontData } from "../types";
+import { ProcessedSlide, SlideData } from "../types";
 
 export const useSlideProcessing = (
   selectedFile: File | null,
   slides: ProcessedSlide[],
-  setSlides: React.Dispatch<React.SetStateAction<ProcessedSlide[]>>,
-  
-  setFontsData: React.Dispatch<React.SetStateAction<FontData | null>>
+  setSlides: React.Dispatch<React.SetStateAction<ProcessedSlide[]>>
 ) => {
   const [isProcessingPptx, setIsProcessingPptx] = useState(false);
 
@@ -159,10 +157,6 @@ export const useSlideProcessing = (
         throw new Error("No slides found in the uploaded file");
       }
 
-      // Extract fonts data only for PPTX where available
-      if (slidesResponseData.fonts) {
-        setFontsData(slidesResponseData.fonts);
-      }
 
       // Initialize slides with skeleton state; for PDF, xml/fonts won't exist
       const initialSlides: ProcessedSlide[] = slidesResponseData.slides.map(
@@ -206,7 +200,7 @@ export const useSlideProcessing = (
     } finally {
       setIsProcessingPptx(false);
     }
-  }, [selectedFile, processSlideToHtml, setSlides, setFontsData]);
+  }, [selectedFile, processSlideToHtml, setSlides]);
 
   // Retry failed slide
   const retrySlide = useCallback(

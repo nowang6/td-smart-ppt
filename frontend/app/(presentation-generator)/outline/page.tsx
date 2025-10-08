@@ -5,9 +5,6 @@ import OutlinePage from './components/OutlinePage'
 export const metadata: Metadata = {
   title: "演示文稿大纲",
   description: "自定义和组织您的演示文稿大纲。拖放幻灯片、添加图表，轻松生成演示文稿。",
-  alternates: {
-    canonical: "https://presenton.ai/create"
-  },
   keywords: [
     "presentation generator",
     "AI presentations",
@@ -24,7 +21,6 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <div className='relative min-h-screen'>
-      <Header />
       <OutlinePage />
     </div>
   )

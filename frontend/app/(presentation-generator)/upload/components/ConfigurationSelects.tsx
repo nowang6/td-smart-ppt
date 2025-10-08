@@ -153,12 +153,7 @@ const LanguageSelect: React.FC<{
     </PopoverTrigger>
     <PopoverContent className="w-[300px] p-0" align="end">
       <Command>
-        <CommandInput
-          placeholder="搜索语言..."
-          className="font-instrument_sans"
-        />
         <CommandList>
-          <CommandEmpty>未找到语言。</CommandEmpty>
           <CommandGroup>
             {Object.values(LanguageType).map((language) => (
               <CommandItem
