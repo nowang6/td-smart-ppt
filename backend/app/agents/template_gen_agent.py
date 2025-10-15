@@ -30,7 +30,6 @@ async def generate_html_from_slide_with_aliyun(
         HTTPException: 如果API调用失败或未生成内容
     """
     print("使用阿里云百炼API从幻灯片图片和XML生成HTML内容...")
-    print(settings.DASHSCOPE_API_KEY)
     
     try:
         # 创建阿里云百炼客户端
@@ -176,25 +175,11 @@ async def generate_html_from_image_file(
         )
 
 
-async def generate_react_component_from_html_with_aliyun(
+async def generate_react_component_from_html(
     html_content: str,
     image_base64: Optional[str] = None,
     media_type: Optional[str] = None,
 ) -> str:
-    """
-    使用阿里云百炼API将HTML内容转换为TSX React组件。
-
-    Args:
-        html_content: 生成的HTML内容
-        image_base64: 可选的base64编码图片
-        media_type: 可选的图片MIME类型
-
-    Returns:
-        生成的TSX React组件代码字符串
-
-    Raises:
-        HTTPException: 如果API调用失败或未生成内容
-    """
     try:
         # 创建阿里云百炼客户端
         client = OpenAI(
@@ -202,7 +187,7 @@ async def generate_react_component_from_html_with_aliyun(
             base_url=settings.LLM_BASE_URL,
         )
 
-        print("正在向阿里云百炼API发送请求生成React组件...")
+        print("正发送请求生成React组件...")
 
         # 构建消息内容
         content_parts = [{"type": "text", "text": f"HTML INPUT:\n{html_content}"}]
@@ -218,7 +203,8 @@ async def generate_react_component_from_html_with_aliyun(
         # 调用阿里云百炼API
         response = client.chat.completions.create(
             model=settings.LLM_MODEL,
-            messages=messages
+            messages=messages,
+            max_tokens=16000
         )
 
         # 提取响应内容
@@ -322,7 +308,7 @@ async def convert_html_to_react_with_aliyun(
             }.get(ext, "image/png")
 
         # 转换HTML为React组件
-        react_component = await generate_react_component_from_html_with_aliyun(
+        react_component = await generate_react_component_from_html(
             html_content=html_content,
             image_base64=image_b64,
             media_type=media_type,
@@ -548,13 +534,180 @@ if __name__ == "__main__":
         </p:sld>
         """
         
-        sample_fonts = ["微软雅黑", "Arial"]
-        html_result = await generate_html_from_image_file(
-            image_path=image_path,
-            xml_content=xml_content,
-            fonts=sample_fonts
+        html_result = """
+            <div class="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
+            <!-- Background Image -->
+            <img src="https://images.pexels.com/photos/31527637/pexels-photo-31527637.jpeg" alt="Background" class="absolute inset-0 w-full h-full object-cover">
+
+            <!-- Logo and Brand -->
+            <div class="absolute top-6 left-6 flex items-center space-x-2">
+                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg">i</div>
+                <span class="text-gray-700 font-bold text-xl font-['微软雅黑']">TDTECH</span>
+            </div>
+
+            <!-- Main Title -->
+            <div class="absolute top-32 left-1/2 transform -translate-x-1/2 text-center px-4">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 font-['微软雅黑'] leading-tight">
+                基于HUAWEI<br>Mate 70 Pro定制的行业终端
+                </h1>
+            </div>
+
+            <!-- Subtitle -->
+            <div class="absolute top-56 left-1/2 transform -translate-x-1/2 text-center px-4">
+                <div class="inline-block bg-white bg-opacity-90 px-6 py-2 rounded-full border border-gray-300 text-gray-700 font-medium text-lg font-['微软雅黑']">
+                移动安全 鼎力相助
+                </div>
+            </div>
+
+            <!-- Features Line -->
+            <div class="absolute top-64 left-1/2 transform -translate-x-1/2 text-center px-4 text-gray-600 text-sm font-['微软雅黑']">
+                北斗卫星消息 | 红枫原色影像 | 超可靠玄武架构
+            </div>
+
+            <!-- Phone Images -->
+            <div class="absolute top-72 left-1/2 transform -translate-x-1/2 flex space-x-6">
+                <img src="https://images.pexels.com/photos/31527637/pexels-photo-31527637.jpeg" alt="Phone Back" class="w-40 h-80 object-contain">
+                <img src="https://images.pexels.com/photos/31527637/pexels-photo-31527637.jpeg" alt="Phone Front" class="w-40 h-80 object-contain">
+            </div>
+
+            <!-- Customization Section Header -->
+            <div class="absolute bottom-64 left-1/2 transform -translate-x-1/2 text-center px-4">
+                <div class="flex items-center justify-center space-x-2">
+                <div class="w-1 h-6 bg-red-500"></div>
+                <h2 class="text-xl font-bold text-gray-800 font-['微软雅黑']">定制能力</h2>
+                <div class="w-1 h-6 bg-red-500"></div>
+                </div>
+            </div>
+
+            <!-- Feature Cards -->
+            <div class="absolute bottom-20 left-1/2 transform -translate-x-1/2 grid grid-cols-3 gap-6 w-11/12 max-w-6xl">
+                <!-- Card 1 -->
+                <div class="flex flex-col items-start space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 8v4l2 2"></path>
+                    </svg>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">行业鸿蒙</div>
+                </div>
+                <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+                    国产操作系统行业定制<br>
+                    分布式可信互联，应用跨设备流转
+                </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flex flex-col items-start space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a4 4 0 0 1 8 0v4"></path>
+                        <path d="M12 11v4"></path>
+                    </svg>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">安全架构</div>
+                </div>
+                <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+                    系统级防root防刷机，安全启动<br>
+                    系统加密，应用安全隔离
+                </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flex flex-col items-start space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">设备管控</div>
+                </div>
+                <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+                    适配行业MDM管控平台<br>
+                    外设接口管控，一键清除设备数据
+                </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flex flex-col items-start space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="16" y2="13"></line>
+                        <line x1="16" y1="17" x2="16" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">内容定制</div>
+                </div>
+                <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+                    应用预置/保活/自启动/防卸载<br>
+                    开机动画定制，产品包装定制
+                </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="flex flex-col items-start space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 8v4l2 2"></path>
+                    </svg>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">定位增强</div>
+                </div>
+                <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+                    单北斗定位<br>
+                    模糊定位
+                </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="flex flex-col items-start space-y-2">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="16" y2="13"></line>
+                        <line x1="16" y1="17" x2="16" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    </div>
+                    <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">场景化方案</div>
+                </div>
+                <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+                    全局水印，企业黄页<br>
+                    物理按键定制
+                </div>
+                </div>
+            </div>
+            </div>
+            """
+         
+        react_result = await generate_react_component_from_html(
+            html_content=html_result,
+            image_base64=None,
+            media_type=None
         )
-        print(html_result)
+        print(react_result)
+        
+        # sample_fonts = ["微软雅黑", "Arial"]
+        # html_result = await generate_html_from_image_file(
+        #     image_path=image_path,
+        #     xml_content=xml_content,
+        #     fonts=sample_fonts
+        # )
+        # print(html_result)
     
     # 运行异步函数
     asyncio.run(run_example())

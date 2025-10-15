@@ -21,7 +21,7 @@ export enum LanguageType {
 }
 
 export interface PresentationConfig {
-  slides: "2" | "5" | "8" | "10" | "12" | "15" | null;
-  language: LanguageType | null;
+  slides: "2" | "4" | "5" | "8" | "10" | "12" | "15" | null;
+  language: LanguageType.ChineseSimplified; // 固定为中文
   prompt: string;
 }

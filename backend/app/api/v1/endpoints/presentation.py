@@ -5,8 +5,9 @@ import os
 import random
 from typing import Annotated, List, Literal, Optional
 from fastapi import APIRouter, Body, Depends, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from pydantic import BaseModel
+from models.pptx_models import PptxPresentationModel
 from models.presentation_outline_model import (
     PresentationOutlineModel,
     SlideOutlineModel
@@ -15,6 +16,7 @@ from pydantic_ai import Agent, RunContext, StructuredDict
 from models.presentation_layout import PresentationLayoutModel
 from models.presentation_structure_model import PresentationStructureModel
 from dataclasses import dataclass
+from utils.asset_directory_utils import get_exports_directory, get_images_directory
 
 from enums.tone import Tone
 from enums.verbosity import Verbosity
@@ -30,6 +32,7 @@ from models.presentation_with_slides import (
 from services.image_generation_service import ImageGenerationService
 from models.sql.slide import SlideModel
 from models.sse_response import SSECompleteResponse, SSEErrorResponse, SSEResponse
+from services.pptx_presentation_creator import PptxPresentationCreator
 from utils.process_slides import (
     process_slide_add_placeholder_assets,
     process_slide_and_fetch_assets,
@@ -40,6 +43,7 @@ from utils.schema_utils import (
     remove_fields_from_schema,
 )
 
+from services.temp_file_service import TEMP_FILE_SERVICE
 
 
 router = APIRouter()
@@ -274,6 +278,50 @@ async def update_presentation(
     return presentation_with_slides
 
 
+@router.post("/export/pptx", response_model=str)
+async def export_presentation_as_pptx(
+    pptx_model: Annotated[PptxPresentationModel, Body()],
+):
+    file_id = str(uuid.uuid4())
+    temp_dir = TEMP_FILE_SERVICE.create_temp_dir(file_id)
+
+    pptx_creator = PptxPresentationCreator(pptx_model, temp_dir)
+    await pptx_creator.create_ppt()
+
+    export_directory = get_exports_directory()
+    filename = f"{pptx_model.name or file_id}.pptx"
+    pptx_path = os.path.join(export_directory, filename)
+    pptx_creator.save(pptx_path)
+
+    return f"./api/app_data/exports/{filename}"
+
+
+@router.get("/download/{filename}")
+async def download_presentation(filename: str):
+    """下载导出的PPTX文件"""
+    export_directory = get_exports_directory()
+    file_path = os.path.join(export_directory, filename)
+    
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    return FileResponse(
+        path=file_path,
+        filename=filename,
+        media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    )
+
+
+@router.patch("/update", response_model=PresentationWithSlides)
+async def update_presentation(
+    id: Annotated[uuid.UUID, Body()],
+    n_slides: Annotated[Optional[int], Body()] = None,
+    title: Annotated[Optional[str], Body()] = None,
+    slides: Annotated[Optional[List[SlideModel]], Body()] = None,
+):
+    presentation_with_slides = presentation_with_slides_cache.get(id)
+    
+    return presentation_with_slides;
 
 
 async def generate_presentation_structure(

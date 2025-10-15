@@ -37,7 +37,7 @@ outline_dict = StructuredDict(
                     "title": "SlideOutlineModelWithNSlides",
                     "type": "object"
                 },
-                "maxItems": 2,
+                "maxItems": 15,
                 "minItems": 2,
                 "title": "Slides",
                 "type": "array"

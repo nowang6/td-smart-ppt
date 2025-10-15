@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     PEXELS_API_KEY: str = ""
     BOCHA_API_KEY: str = ""
     DASHSCOPE_API_KEY: str = ""
+    DEEPSEEK_API_KEY: str = ""
+    DEEPSEEK_BASE_URL: str = ""
+    DEEPSEEK_MODEL: str = ""
     
     class Config:
         env_file = ".env"

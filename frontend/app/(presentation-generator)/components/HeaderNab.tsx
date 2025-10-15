@@ -22,7 +22,7 @@ const HeaderNav = () => {
         role="menuitem"
         onClick={() => trackEvent(MixpanelEvent.Navigation, { from: pathname, to: "/dashboard" })}
       >
-        <LayoutDashboard className="w-5 h-5" />
+  
       </Link>
       {canChangeKeys && (
         <Link

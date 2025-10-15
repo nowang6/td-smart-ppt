@@ -92,11 +92,7 @@ async function closeBrowserAndPage(browser: Browser | null, page: Page | null) {
 }
 
 function getScreenshotsDir() {
-  const tempDir = process.env.TEMP_DIRECTORY;
-  if (!tempDir) {
-    console.warn('TEMP_DIRECTORY environment variable not set, skipping screenshot');
-    throw new ApiError('TEMP_DIRECTORY environment variable not set');
-  }
+  const tempDir = process.env.TEMP_DIRECTORY || '/tmp/td-ppt';
   const screenshotsDir = path.join(tempDir, 'screenshots');
   if (!fs.existsSync(screenshotsDir)) {
     fs.mkdirSync(screenshotsDir, { recursive: true });

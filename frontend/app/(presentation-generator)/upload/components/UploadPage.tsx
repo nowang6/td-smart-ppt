@@ -44,7 +44,7 @@ const UploadPage = () => {
   // State management
   const [files, setFiles] = useState<File[]>([]);
   const [config, setConfig] = useState<PresentationConfig>({
-    slides: "2",
+    slides: "4",
     language: LanguageType.ChineseSimplified,
     prompt: "",
   });
@@ -63,6 +63,10 @@ const UploadPage = () => {
    * @param value - New value for the configuration
    */
   const handleConfigChange = (key: keyof PresentationConfig, value: string) => {
+    // 不允许修改 language 字段，始终为中文
+    if (key === "language") {
+      return;
+    }
     setConfig((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -71,8 +75,8 @@ const UploadPage = () => {
    * @returns boolean indicating if the configuration is valid
    */
   const validateConfiguration = (): boolean => {
-    if (!config.language || !config.slides) {
-      toast.error("请选择幻灯片数量和语言");
+    if (!config.slides) {
+      toast.error("请选择幻灯片数量");
       return false;
     }
 
@@ -155,7 +159,7 @@ const UploadPage = () => {
       content: config?.prompt ?? "",
       n_slides: config?.slides ? parseInt(config.slides) : null,
       file_paths: [],
-      language: config?.language ?? "",
+      language: LanguageType.ChineseSimplified, // 始终使用中文
     });
 
     dispatch(setPresentationId(createResponse.id));
