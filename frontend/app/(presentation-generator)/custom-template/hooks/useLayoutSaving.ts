@@ -33,7 +33,7 @@ export const useLayoutSaving = (
 
     while (retryCount < maxRetries) {
       try {
-        const response = await fetch("/api/v1/ppt/html-to-react/", {
+        const response = await fetch("/api/v1/html-to-react/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -133,14 +133,14 @@ export const useLayoutSaving = (
       console.log(reactComponents);
 
       // First create/update the template metadata
-      await fetch("/api/v1/ppt/template-management/templates", {
+      await fetch("/api/v1/template-management/templates", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: presentationId, name: layoutName, description }),
       });
 
       const saveResponse = await fetch(
-        "/api/v1/ppt/template-management/save-templates",
+        "/api/v1/template-management/save-templates",
         {
           method: "POST",
           headers: {

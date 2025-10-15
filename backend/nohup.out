@@ -1,242 +1,163 @@
-INFO:     Started server process [12320]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-Langfuse client is authenticated and ready!
-INFO:     127.0.0.1:60872 - "GET /api/v1/ppt/template-management/summary HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:36164 - "POST /api/v1/files/upload HTTP/1.1" 200 OK
-2025-09-29 20:44:23,858 - INFO - detected formats: [<InputFormat.DOCX: 'docx'>]
-2025-09-29 20:44:23,872 - INFO - Going to convert document batch...
-2025-09-29 20:44:23,872 - INFO - Initializing pipeline for SimplePipeline with options hash 60c8066c482b9239b869b997da3fb1da
-2025-09-29 20:44:23,880 - INFO - Loading plugin 'docling_defaults'
-2025-09-29 20:44:23,881 - INFO - Registered picture descriptions: ['vlm', 'api']
-2025-09-29 20:44:23,881 - INFO - Processing document 访谈.docx
-2025-09-29 20:44:23,923 - INFO - Finished converting document 访谈.docx in 0.07 sec.
-INFO:     127.0.0.1:36172 - "POST /api/v1/files/decompose HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54830 - "POST /api/v1/presentation/create HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:45318 - "POST /api/v1/presentation/create HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:44750 - "GET /api/v1/ppt/template-management/summary HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:44760 - "GET /api/v1/ppt/template-management/summary HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:34524 - "POST /api/v1/files/upload HTTP/1.1" 200 OK
-2025-09-29 20:46:03,862 - INFO - detected formats: [<InputFormat.DOCX: 'docx'>]
-2025-09-29 20:46:03,892 - INFO - Going to convert document batch...
-2025-09-29 20:46:03,892 - INFO - Initializing pipeline for SimplePipeline with options hash 60c8066c482b9239b869b997da3fb1da
-2025-09-29 20:46:03,893 - INFO - Processing document 10.20【幻彩欧洲之旅】4国13天 国航直飞德法意瑞 10晚13天.docx
-2025-09-29 20:46:03,896 - INFO - deleted item in tree at stack: (2,) => #/texts/1
-2025-09-29 20:46:03,897 - INFO - deleted item in tree at stack: (2,) => #/texts/1
-2025-09-29 20:46:03,956 - INFO - deleted item in tree at stack: (2,) => #/texts/5
-2025-09-29 20:46:03,958 - INFO - deleted item in tree at stack: (2,) => #/texts/5
-2025-09-29 20:46:03,959 - INFO - deleted item in tree at stack: (2,) => #/texts/5
-2025-09-29 20:46:03,960 - INFO - deleted item in tree at stack: (2,) => #/texts/5
-2025-09-29 20:46:03,961 - INFO - deleted item in tree at stack: (2,) => #/texts/5
-2025-09-29 20:46:03,962 - INFO - deleted item in tree at stack: (2,) => #/texts/5
-2025-09-29 20:46:04,035 - INFO - deleted item in tree at stack: (4,) => #/texts/30
-2025-09-29 20:46:04,036 - INFO - deleted item in tree at stack: (4,) => #/texts/30
-2025-09-29 20:46:04,037 - INFO - deleted item in tree at stack: (4,) => #/texts/30
-2025-09-29 20:46:04,106 - INFO - deleted item in tree at stack: (6,) => #/texts/40
-2025-09-29 20:46:04,107 - INFO - deleted item in tree at stack: (6,) => #/texts/40
-2025-09-29 20:46:04,109 - INFO - deleted item in tree at stack: (6,) => #/texts/40
-2025-09-29 20:46:04,175 - INFO - deleted item in tree at stack: (9,) => #/texts/64
-2025-09-29 20:46:04,177 - INFO - deleted item in tree at stack: (9,) => #/texts/64
-2025-09-29 20:46:04,179 - INFO - deleted item in tree at stack: (9,) => #/texts/64
-2025-09-29 20:46:04,231 - INFO - deleted item in tree at stack: (11,) => #/texts/79
-2025-09-29 20:46:04,234 - INFO - deleted item in tree at stack: (11,) => #/texts/79
-2025-09-29 20:46:04,236 - INFO - deleted item in tree at stack: (11,) => #/texts/79
-2025-09-29 20:46:04,310 - INFO - deleted item in tree at stack: (15,) => #/texts/98
-2025-09-29 20:46:04,312 - INFO - deleted item in tree at stack: (15,) => #/texts/98
-2025-09-29 20:46:04,314 - INFO - deleted item in tree at stack: (15,) => #/texts/98
-2025-09-29 20:46:04,384 - INFO - deleted item in tree at stack: (17,) => #/texts/117
-2025-09-29 20:46:04,387 - INFO - deleted item in tree at stack: (17,) => #/texts/117
-2025-09-29 20:46:04,389 - INFO - deleted item in tree at stack: (17,) => #/texts/117
-2025-09-29 20:46:04,462 - INFO - deleted item in tree at stack: (19,) => #/texts/139
-2025-09-29 20:46:04,465 - INFO - deleted item in tree at stack: (19,) => #/texts/139
-2025-09-29 20:46:04,468 - INFO - deleted item in tree at stack: (19,) => #/texts/139
-2025-09-29 20:46:04,539 - INFO - deleted item in tree at stack: (21,) => #/texts/156
-2025-09-29 20:46:04,542 - INFO - deleted item in tree at stack: (21,) => #/texts/156
-2025-09-29 20:46:04,545 - INFO - deleted item in tree at stack: (21,) => #/texts/156
-2025-09-29 20:46:04,600 - INFO - deleted item in tree at stack: (23,) => #/texts/182
-2025-09-29 20:46:04,604 - INFO - deleted item in tree at stack: (23,) => #/texts/182
-2025-09-29 20:46:04,608 - INFO - deleted item in tree at stack: (23,) => #/texts/182
-2025-09-29 20:46:04,656 - INFO - deleted item in tree at stack: (24,) => #/texts/195
-2025-09-29 20:46:04,660 - INFO - deleted item in tree at stack: (24,) => #/texts/195
-2025-09-29 20:46:04,664 - INFO - deleted item in tree at stack: (24,) => #/texts/195
-2025-09-29 20:46:04,671 - INFO - deleted item in tree at stack: (24,) => #/texts/199
-2025-09-29 20:46:04,675 - INFO - deleted item in tree at stack: (24,) => #/texts/199
-2025-09-29 20:46:04,679 - INFO - deleted item in tree at stack: (24,) => #/texts/199
-2025-09-29 20:46:04,686 - INFO - deleted item in tree at stack: (33,) => #/texts/207
-2025-09-29 20:46:04,706 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,711 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,715 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,719 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,724 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,728 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,732 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,736 - INFO - deleted item in tree at stack: (56,) => #/texts/240
-2025-09-29 20:46:04,741 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,745 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,750 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,754 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,758 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,763 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,767 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,771 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,776 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,780 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,784 - INFO - deleted item in tree at stack: (58,) => #/texts/241
-2025-09-29 20:46:04,789 - INFO - deleted item in tree at stack: (60,) => #/texts/242
-2025-09-29 20:46:04,793 - INFO - deleted item in tree at stack: (60,) => #/texts/242
-2025-09-29 20:46:04,798 - INFO - deleted item in tree at stack: (60,) => #/texts/242
-2025-09-29 20:46:04,802 - INFO - deleted item in tree at stack: (60,) => #/texts/242
-2025-09-29 20:46:04,807 - INFO - deleted item in tree at stack: (60,) => #/texts/242
-2025-09-29 20:46:04,811 - INFO - deleted item in tree at stack: (60,) => #/texts/242
-2025-09-29 20:46:04,816 - INFO - deleted item in tree at stack: (62,) => #/texts/243
-2025-09-29 20:46:04,820 - INFO - deleted item in tree at stack: (62,) => #/texts/243
-2025-09-29 20:46:04,825 - INFO - deleted item in tree at stack: (62,) => #/texts/243
-2025-09-29 20:46:04,829 - INFO - deleted item in tree at stack: (62,) => #/texts/243
-2025-09-29 20:46:04,834 - INFO - deleted item in tree at stack: (62,) => #/texts/243
-2025-09-29 20:46:04,838 - INFO - deleted item in tree at stack: (62,) => #/texts/243
-2025-09-29 20:46:04,848 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,852 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,857 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,861 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,866 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,870 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,875 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,879 - INFO - deleted item in tree at stack: (74,) => #/texts/254
-2025-09-29 20:46:04,884 - INFO - deleted item in tree at stack: (76,) => #/texts/255
-2025-09-29 20:46:04,890 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,894 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,899 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,903 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,908 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,913 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,917 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,922 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,926 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,931 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,935 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,940 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,944 - INFO - deleted item in tree at stack: (77,) => #/texts/257
-2025-09-29 20:46:04,950 - INFO - deleted item in tree at stack: (79,) => #/texts/258
-2025-09-29 20:46:04,967 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,972 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,976 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,981 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,986 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,990 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,995 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:04,999 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:05,004 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:05,009 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:05,014 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:05,018 - INFO - deleted item in tree at stack: (79,) => #/texts/259
-2025-09-29 20:46:05,023 - INFO - deleted item in tree at stack: (81,) => #/texts/260
-2025-09-29 20:46:05,028 - INFO - deleted item in tree at stack: (81,) => #/texts/260
-2025-09-29 20:46:05,033 - INFO - deleted item in tree at stack: (81,) => #/texts/260
-2025-09-29 20:46:05,038 - INFO - deleted item in tree at stack: (81,) => #/texts/260
-2025-09-29 20:46:05,044 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,050 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,055 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,060 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,066 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,071 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,077 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,082 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,088 - INFO - deleted item in tree at stack: (83,) => #/texts/261
-2025-09-29 20:46:05,093 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,099 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,104 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,110 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,115 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,120 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,124 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,129 - INFO - deleted item in tree at stack: (85,) => #/texts/262
-2025-09-29 20:46:05,157 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,162 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,168 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,173 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,178 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,184 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,189 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,195 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,200 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,205 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,211 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,216 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,222 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,227 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,232 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,238 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,243 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,248 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,254 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,259 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,265 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,270 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,276 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,281 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,286 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,292 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,297 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,303 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,308 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,314 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,319 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,324 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,330 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,335 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,340 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,346 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,351 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,357 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,362 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,367 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,373 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,378 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,383 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,388 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,394 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,399 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,404 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,409 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,415 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,420 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,425 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,431 - INFO - deleted item in tree at stack: (129,) => #/texts/303
-2025-09-29 20:46:05,459 - INFO - deleted item in tree at stack: (165,) => #/texts/362
-2025-09-29 20:46:05,465 - INFO - deleted item in tree at stack: (165,) => #/texts/362
-2025-09-29 20:46:05,471 - INFO - deleted item in tree at stack: (165,) => #/texts/362
-2025-09-29 20:46:05,477 - INFO - deleted item in tree at stack: (165,) => #/texts/362
-2025-09-29 20:46:05,483 - INFO - deleted item in tree at stack: (165,) => #/texts/362
-2025-09-29 20:46:05,495 - INFO - deleted item in tree at stack: (165,) => #/texts/368
-2025-09-29 20:46:05,501 - INFO - deleted item in tree at stack: (165,) => #/texts/368
-2025-09-29 20:46:05,512 - INFO - deleted item in tree at stack: (165,) => #/texts/374
-2025-09-29 20:46:05,519 - INFO - deleted item in tree at stack: (165,) => #/texts/374
-2025-09-29 20:46:05,532 - INFO - deleted item in tree at stack: (166,) => #/texts/383
-2025-09-29 20:46:05,538 - INFO - deleted item in tree at stack: (166,) => #/texts/383
-2025-09-29 20:46:05,545 - INFO - deleted item in tree at stack: (166,) => #/texts/383
-2025-09-29 20:46:05,557 - INFO - deleted item in tree at stack: (166,) => #/texts/389
-2025-09-29 20:46:05,564 - INFO - deleted item in tree at stack: (166,) => #/texts/389
-2025-09-29 20:46:05,571 - INFO - deleted item in tree at stack: (166,) => #/texts/389
-2025-09-29 20:46:05,583 - INFO - deleted item in tree at stack: (166,) => #/texts/395
-2025-09-29 20:46:05,591 - INFO - deleted item in tree at stack: (166,) => #/texts/397
-2025-09-29 20:46:05,598 - INFO - deleted item in tree at stack: (166,) => #/texts/397
-2025-09-29 20:46:05,610 - INFO - deleted item in tree at stack: (166,) => #/texts/403
-2025-09-29 20:46:05,617 - INFO - deleted item in tree at stack: (166,) => #/texts/403
-2025-09-29 20:46:05,624 - INFO - deleted item in tree at stack: (166,) => #/texts/403
-2025-09-29 20:46:05,634 - INFO - deleted item in tree at stack: (166,) => #/texts/407
-2025-09-29 20:46:05,641 - INFO - deleted item in tree at stack: (166,) => #/texts/407
-2025-09-29 20:46:05,648 - INFO - deleted item in tree at stack: (166,) => #/texts/407
-2025-09-29 20:46:05,659 - INFO - deleted item in tree at stack: (166,) => #/texts/411
-2025-09-29 20:46:05,665 - INFO - deleted item in tree at stack: (166,) => #/texts/411
-2025-09-29 20:46:05,672 - INFO - deleted item in tree at stack: (166,) => #/texts/411
-2025-09-29 20:46:05,679 - INFO - deleted item in tree at stack: (166,) => #/texts/411
-2025-09-29 20:46:05,690 - INFO - deleted item in tree at stack: (166,) => #/texts/416
-2025-09-29 20:46:05,698 - INFO - Finished converting document 10.20【幻彩欧洲之旅】4国13天 国航直飞德法意瑞 10晚13天.docx in 1.85 sec.
-INFO:     127.0.0.1:34532 - "POST /api/v1/files/decompose HTTP/1.1" 200 OK
-INFO:     127.0.0.1:34358 - "POST /api/v1/presentation/create HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:38498 - "POST /api/v1/presentation/create HTTP/1.1" 404 Not Found
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [12320]
+使用阿里云百炼API从幻灯片图片和XML生成HTML内容...
+sk-bec54ffc18574a4e9c31c6ba4ef36ac6
+正在向阿里云百炼API发送请求生成HTML...
+收到HTML内容长度: 7568
+
+<div class="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
+  <!-- Background Image -->
+  <img src="https://images.pexels.com/photos/31527637/pexels-photo-31527637.jpeg" alt="Background" class="absolute inset-0 w-full h-full object-cover">
+
+  <!-- Logo and Brand -->
+  <div class="absolute top-6 left-6 flex items-center space-x-2">
+    <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg">i</div>
+    <span class="text-gray-700 font-bold text-xl font-['微软雅黑']">TDTECH</span>
+  </div>
+
+  <!-- Main Title -->
+  <div class="absolute top-32 left-1/2 transform -translate-x-1/2 text-center px-4">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 font-['微软雅黑'] leading-tight">
+      基于HUAWEI<br>Mate 70 Pro定制的行业终端
+    </h1>
+  </div>
+
+  <!-- Subtitle -->
+  <div class="absolute top-56 left-1/2 transform -translate-x-1/2 text-center px-4">
+    <div class="inline-block bg-white bg-opacity-90 px-6 py-2 rounded-full border border-gray-300 text-gray-700 font-medium text-lg font-['微软雅黑']">
+      移动安全 鼎力相助
+    </div>
+  </div>
+
+  <!-- Features Line -->
+  <div class="absolute top-64 left-1/2 transform -translate-x-1/2 text-center px-4 text-gray-600 text-sm font-['微软雅黑']">
+    北斗卫星消息 | 红枫原色影像 | 超可靠玄武架构
+  </div>
+
+  <!-- Phone Images -->
+  <div class="absolute top-72 left-1/2 transform -translate-x-1/2 flex space-x-6">
+    <img src="https://images.pexels.com/photos/31527637/pexels-photo-31527637.jpeg" alt="Phone Back" class="w-40 h-80 object-contain">
+    <img src="https://images.pexels.com/photos/31527637/pexels-photo-31527637.jpeg" alt="Phone Front" class="w-40 h-80 object-contain">
+  </div>
+
+  <!-- Customization Section Header -->
+  <div class="absolute bottom-64 left-1/2 transform -translate-x-1/2 text-center px-4">
+    <div class="flex items-center justify-center space-x-2">
+      <div class="w-1 h-6 bg-red-500"></div>
+      <h2 class="text-xl font-bold text-gray-800 font-['微软雅黑']">定制能力</h2>
+      <div class="w-1 h-6 bg-red-500"></div>
+    </div>
+  </div>
+
+  <!-- Feature Cards -->
+  <div class="absolute bottom-20 left-1/2 transform -translate-x-1/2 grid grid-cols-3 gap-6 w-11/12 max-w-6xl">
+    <!-- Card 1 -->
+    <div class="flex flex-col items-start space-y-2">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4l2 2"></path>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">行业鸿蒙</div>
+      </div>
+      <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+        国产操作系统行业定制<br>
+        分布式可信互联，应用跨设备流转
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="flex flex-col items-start space-y-2">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a4 4 0 0 1 8 0v4"></path>
+            <path d="M12 11v4"></path>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">安全架构</div>
+      </div>
+      <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+        系统级防root防刷机，安全启动<br>
+        系统加密，应用安全隔离
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="flex flex-col items-start space-y-2">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">设备管控</div>
+      </div>
+      <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+        适配行业MDM管控平台<br>
+        外设接口管控，一键清除设备数据
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="flex flex-col items-start space-y-2">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="16" y2="13"></line>
+            <line x1="16" y1="17" x2="16" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">内容定制</div>
+      </div>
+      <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+        应用预置/保活/自启动/防卸载<br>
+        开机动画定制，产品包装定制
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="flex flex-col items-start space-y-2">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4l2 2"></path>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">定位增强</div>
+      </div>
+      <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+        单北斗定位<br>
+        模糊定位
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="flex flex-col items-start space-y-2">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-white border border-gray-300 rounded flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="16" y2="13"></line>
+            <line x1="16" y1="17" x2="16" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <div class="text-sm font-semibold text-gray-700 font-['微软雅黑']">场景化方案</div>
+      </div>
+      <div class="text-xs text-gray-600 font-['微软雅黑'] leading-tight">
+        全局水印，企业黄页<br>
+        物理按键定制
+      </div>
+    </div>
+  </div>
+</div>
+

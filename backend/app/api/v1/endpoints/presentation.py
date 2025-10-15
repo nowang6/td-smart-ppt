@@ -9,19 +9,37 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from models.presentation_outline_model import (
     PresentationOutlineModel,
-    SlideOutlineModel,
+    SlideOutlineModel
 )
+from pydantic_ai import Agent, RunContext, StructuredDict
 from models.presentation_layout import PresentationLayoutModel
 from models.presentation_structure_model import PresentationStructureModel
+from dataclasses import dataclass
 
 from enums.tone import Tone
 from enums.verbosity import Verbosity
 import uuid
-from app.agents.structure import agent
+from app.agents.structure import structure_agent as structure_agent
+from app.agents.structure import StructureDependencies
+from app.agents.slide_content import llm
 from models.sql.presentation import PresentationModel, presentation_cache
 from models.presentation_with_slides import (
     PresentationWithSlides,
+    presentation_with_slides_cache,
 )
+from services.image_generation_service import ImageGenerationService
+from models.sql.slide import SlideModel
+from models.sse_response import SSECompleteResponse, SSEErrorResponse, SSEResponse
+from utils.process_slides import (
+    process_slide_add_placeholder_assets,
+    process_slide_and_fetch_assets,
+)
+from models.presentation_layout import SlideLayoutModel
+from utils.schema_utils import (
+    add_field_in_schema,
+    remove_fields_from_schema,
+)
+
 
 
 router = APIRouter()
@@ -130,8 +148,10 @@ async def stream_presentation(id: uuid.UUID):
             status_code=400,
             detail="Outlines can not be empty",
         )
+        
+    images_directory = "app_data/images"
 
-    image_generation_service = ImageGenerationService(get_images_directory())
+    image_generation_service = ImageGenerationService(images_directory)
 
     async def inner():
         structure = presentation.get_structure()
@@ -153,9 +173,6 @@ async def stream_presentation(id: uuid.UUID):
                 slide_content = await get_slide_content_from_type_and_outline(
                     slide_layout,
                     outline.slides[i],
-                    presentation.language,
-                    presentation.tone,
-                    presentation.verbosity,
                     presentation.instructions,
                 )
             except HTTPException as e:
@@ -195,28 +212,68 @@ async def stream_presentation(id: uuid.UUID):
         for assets_list in generated_assets_lists:
             generated_assets.extend(assets_list)
 
-        # Moved this here to make sure new slides are generated before deleting the old ones
-        await sql_session.execute(
-            delete(SlideModel).where(SlideModel.presentation == id)
-        )
-        await sql_session.commit()
 
-        sql_session.add(presentation)
-        sql_session.add_all(slides)
-        sql_session.add_all(generated_assets)
-        await sql_session.commit()
-
-        response = PresentationWithSlides(
+        presentationWithSlides = PresentationWithSlides(
             **presentation.model_dump(),
             slides=slides,
         )
-
+        
+        # 缓存 presentationWithSlides
+        presentation_with_slides_cache.create(presentationWithSlides)
+        
         yield SSECompleteResponse(
             key="presentation",
-            value=response.model_dump(mode="json"),
+            value=presentationWithSlides.model_dump(mode="json"),
         ).to_string()
 
     return StreamingResponse(inner(), media_type="text/event-stream")
+
+@router.get("/{id}", response_model=PresentationWithSlides)
+async def get_presentation(
+    id: uuid.UUID
+):
+    presentation_with_slides = presentation_with_slides_cache.get(id)  
+    return presentation_with_slides
+
+@router.patch("/update", response_model=PresentationWithSlides)
+async def update_presentation(
+    id: Annotated[uuid.UUID, Body()],
+    n_slides: Annotated[Optional[int], Body()] = None,
+    title: Annotated[Optional[str], Body()] = None,
+    slides: Annotated[Optional[List[SlideModel]], Body()] = None,
+):
+    presentation = presentation_cache.get(id)
+    if not presentation:
+        raise HTTPException(status_code=404, detail="Presentation not found")
+
+    presentation_update_dict = {}
+    if n_slides:
+        presentation_update_dict["n_slides"] = n_slides
+    if title:
+        presentation_update_dict["title"] = title
+
+    if slides:
+        # Just to make sure id is UUID
+        for slide in slides:
+            slide.presentation = uuid.UUID(slide.presentation)
+            slide.id = uuid.UUID(slide.id)
+
+
+
+    presentation_with_slides = PresentationWithSlides(
+        **presentation.model_dump(),
+        slides=slides or [],
+    )
+    
+    # 缓存或更新 presentationWithSlides
+    if presentation_with_slides_cache.get(id):
+        presentation_with_slides_cache.update(presentation_with_slides)
+    else:
+        presentation_with_slides_cache.create(presentation_with_slides)
+    
+    return presentation_with_slides
+
+
 
 
 async def generate_presentation_structure(
@@ -224,6 +281,73 @@ async def generate_presentation_structure(
     presentation_layout: PresentationLayoutModel,
     instructions: Optional[str] = None,
 ) -> PresentationStructureModel:
-    res = await agent.run(presentation_outline.to_string(), deps={"instructions": instructions, "presentation_layout": presentation_layout, "n_slides": len(presentation_outline.slides)})
+    deps = StructureDependencies(presentation_layout=presentation_layout, instructions=instructions, n_slides=len(presentation_outline.slides))
+    res = await structure_agent.run(presentation_outline.to_string(), deps=deps)
     # 将字典转换为 PresentationStructureModel 对象
     return PresentationStructureModel(**res.output)
+
+async def get_slide_content_from_type_and_outline(
+    slide_layout: SlideLayoutModel,
+    slide_outline: SlideOutlineModel,
+    instructions: Optional[str] = None,
+) -> str:
+    response_schema = remove_fields_from_schema(
+    slide_layout.json_schema, ["__image_url__", "__icon_url__"]
+    )
+    response_schema = add_field_in_schema(
+        response_schema,
+        {
+            "__speaker_note__": {
+                "type": "string",
+                "minLength": 100,
+                "maxLength": 250,
+                "description": "Speaker note for the slide",
+            }
+        },
+        True,
+    )
+    
+    # 将 JSON Schema 转换为 StructuredDict
+    structured_schema = StructuredDict(
+        response_schema,
+        name="SlideContent",
+        description="Slide content structure"
+    )
+    
+    sys_prompt = f"""
+        根据提供的大纲生成结构化幻灯片，遵循以下步骤和注意事项，并输出结构化结果。
+        
+        {"# 用户说明:" if instructions else ""}
+        {instructions or ""}
+
+        # 步骤
+        1. 分析大纲。
+        2. 根据大纲生成结构化幻灯片内容。
+
+        # 注意事项
+        - 幻灯片正文中不要使用诸如"This slide"、"This presentation"等词语。
+        - 重新组织幻灯片正文，使其表达自然流畅。
+        - 仅使用 Markdown 来突出重点内容。
+        - 确保遵循语言规范。
+        - 严格遵守幻灯片中每个字段的最大和最小字符限制。
+        - 绝对不要超过最大字符限制。请控制叙述内容以确保不超过最大字符数。
+        - 项目数量不得超过幻灯片架构（schema）中指定的最大数量。如需表达多个要点，请合并后符合最大数量要求。
+        - 对每个字段生成的字数要非常谨慎。超过最大字符限制会导致设计溢出，因此请提前分析并严格控制生成字数。
+        - 内容中不要使用表情符号。
+        - 度量（metrics）应使用缩写形式，尽量简短，不要使用冗长的描述。
+        用户说明应始终被遵守，并优先于其他所有规则，但不得违反最大/最小字符限制、幻灯片架构和项目数量限制。
+
+        - 输出应为 JSON 格式，且**不要包含 <parameters> 标签**。
+
+        # 图片与图标输出格式
+        image: {{
+            __image_prompt__: string,
+        }}
+        icon: {{
+            __icon_query__: string,
+            }}
+    """
+    
+    outline_agent = Agent(llm, deps_type=StructureDependencies, system_prompt=sys_prompt, output_type=structured_schema)
+    res = await outline_agent.run(slide_outline.content, deps={"instructions": instructions})
+    return res.output

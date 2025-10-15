@@ -27,7 +27,7 @@ export class DashboardApi {
   static async getPresentations(): Promise<PresentationResponse[]> {
     try {
       const response = await fetch(
-        `/api/v1/ppt/presentation/all`,
+        `/api/v1/presentation/all`,
         {
           method: "GET",
         }
@@ -49,7 +49,7 @@ export class DashboardApi {
   static async getPresentation(id: string) {
     try {
       const response = await fetch(
-        `/api/v1/ppt/presentation/${id}`,
+        `/api/v1/presentation/${id}`,
         {
           method: "GET",
         }
@@ -65,7 +65,7 @@ export class DashboardApi {
   static async deletePresentation(presentation_id: string) {
     try {
       const response = await fetch(
-        `/api/v1/ppt/presentation/${presentation_id}`,
+        `/api/v1/presentation/${presentation_id}`,
         {
           method: "DELETE",
           headers: getHeader(),

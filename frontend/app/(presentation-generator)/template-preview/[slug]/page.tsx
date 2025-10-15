@@ -41,7 +41,7 @@ const GroupLayoutPreview = () => {
     const loadCustomLayouts = async () => {
       if (!isCustom) return;
       try {
-        const res = await fetch(`/api/v1/ppt/template-management/get-templates/${presentationId}`);
+        const res = await fetch(`/api/v1/template-management/get-templates/${presentationId}`);
         if (!res.ok) return;
         const data = await res.json();
         const map: Record<string, { layout_id: string; layout_name: string; layout_code: string }> = {};
@@ -90,7 +90,7 @@ const GroupLayoutPreview = () => {
     const presentationId = slug.replace('custom-','');
     refetch();
     router.back();
-    const response = await fetch(`/api/v1/ppt/template-management/delete-templates/${presentationId}`, {
+    const response = await fetch(`/api/v1/template-management/delete-templates/${presentationId}`, {
       method: "DELETE",
     }); 
     if (response.ok) {
@@ -127,7 +127,7 @@ const GroupLayoutPreview = () => {
           },
         ],
       };
-      const res = await fetch(`/api/v1/ppt/template-management/save-templates`, {
+      const res = await fetch(`/api/v1/template-management/save-templates`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -86,7 +86,7 @@ export function ConfigurationInitializer({ children }: { children: React.ReactNo
 
   const checkIfSelectedCustomModelIsAvailable = async (llmConfig: LLMConfig) => {
     try {
-      const response = await fetch('/api/v1/ppt/openai/models/available', {
+      const response = await fetch('/api/v1/openai/models/available', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 from enums.image_provider import ImageProvider
+from app.core.config import settings
 from utils.get_env import (
     get_google_api_key_env,
     get_image_provider_env,
@@ -9,19 +10,19 @@ from utils.get_env import (
 
 
 def is_pixels_selected() -> bool:
-    return ImageProvider.PEXELS == get_selected_image_provider()
+    return True
 
 
 def is_pixabay_selected() -> bool:
-    return ImageProvider.PIXABAY == get_selected_image_provider()
+    return False
 
 
 def is_gemini_flash_selected() -> bool:
-    return ImageProvider.GEMINI_FLASH == get_selected_image_provider()
+    return False
 
 
 def is_dalle3_selected() -> bool:
-    return ImageProvider.DALLE3 == get_selected_image_provider()
+    return False
 
 
 def get_selected_image_provider() -> ImageProvider | None:
@@ -37,14 +38,4 @@ def get_selected_image_provider() -> ImageProvider | None:
 
 
 def get_image_provider_api_key() -> str:
-    selected_image_provider = get_selected_image_provider()
-    if selected_image_provider == ImageProvider.PEXELS:
-        return get_pexels_api_key_env()
-    elif selected_image_provider == ImageProvider.PIXABAY:
-        return get_pixabay_api_key_env()
-    elif selected_image_provider == ImageProvider.GEMINI_FLASH:
-        return get_google_api_key_env()
-    elif selected_image_provider == ImageProvider.DALLE3:
-        return get_openai_api_key_env()
-    else:
-        raise ValueError(f"Invalid image provider: {selected_image_provider}")
+    return settings.PEXELS_API_KEY

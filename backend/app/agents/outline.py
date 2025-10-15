@@ -1,9 +1,10 @@
 from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
-from app.core.config import settings
-from app.templates import outline_dict
 
+from app.templates import outline_dict
+from pydantic_ai import Agent, RunContext
+from app.llm import llm_model
+from dataclasses import dataclass
+from typing import Optional
 
 sys_prompt = """
 你是一名专业的演示文稿创建专家。根据用户需求生成结构化演示文稿，并按照指定的 JSON 模板格式化内容，使用 Markdown 编写。
@@ -15,12 +16,21 @@ sys_prompt = """
     - 如果提供了“附加信息”，请将其分割到多张幻灯片中。
     - 内容中不要包含任何图片。
     - 确保内容遵循语言规范。
-    - 用户指令应始终被遵循，并优先于其他指令，**但幻灯片编号除外。请不要遵循用户指示中的幻灯片编号。**
+    - 用户指令应始终被遵循，并优先于其他指令。
     - 不生成目录幻灯片。
     - 即使提供了目录，也不要生成目录幻灯片。
     - 第一张幻灯片必须为标题幻灯片。
 """
 
-llm_provider = OpenAIProvider(base_url=settings.LLM_BASE_URL, api_key=settings.LLM_API_KEY)
-llm = OpenAIChatModel(model_name=settings.LLM_MODEL, provider=llm_provider)
-agent = Agent(llm, instructions=sys_prompt, output_type=outline_dict)
+
+@dataclass
+class StructureDependencies:
+    instructions: Optional[str] = None
+    
+
+
+outline_agent = Agent(llm_model, deps_type=StructureDependencies, system_prompt=sys_prompt, output_type=outline_dict)
+
+@outline_agent.system_prompt  
+def add_instructions(ctx: RunContext[str]) -> str:
+    return f"\n# 用户指令：\n {ctx.deps['instructions']} \n\n"

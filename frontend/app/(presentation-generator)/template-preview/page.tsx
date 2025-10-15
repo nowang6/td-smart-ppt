@@ -36,7 +36,7 @@ const LayoutPreview = () => {
 
   useEffect(() => {
     // Fetch summary to map custom group slug to template meta and last updated time
-    fetch("/api/v1/ppt/template-management/summary")
+    fetch("/api/v1/template-management/summary")
       .then((res) => res.json())
       .then((data) => {
         const map: Record<string, { lastUpdatedAt?: number; name?: string; description?: string }> = {};

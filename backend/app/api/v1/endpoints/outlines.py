@@ -21,42 +21,21 @@ from pydantic_ai.ag_ui import SSE_CONTENT_TYPE, run_ag_ui
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from app.core.config import settings
-from app.agents.outline import agent
+from app.agents.outline import outline_agent
 from services.documents_loader import DocumentsLoader
 from models.sql.presentation import presentation_cache
 import uuid
 import dirtyjson
 from models.presentation_outline_model import PresentationOutlineModel
 from utils.ppt_utils import get_presentation_title_from_outlines
+from utils.ai_search import bocha_websearch
 
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-# async def get_outline_from_stream(event_stream) -> PresentationOutlineModel:
-    
-#     agent_outlines_text = ""
-    
-#     async for chunk in event_stream:
-#         agent_outlines_text += chunk
-#         yield chunk
-    
-#     try:
-#         agent_outlines_json = dict(
-#             dirtyjson.loads(agent_outlines_text)
-#         )
-#     except Exception as e:
-#         yield SSEErrorResponse(
-#             detail=f"Failed to generate presentation outlines. Please try again. {str(e)}",
-#         ).to_string()
-#         return
 
-#     presentation_outlines = PresentationOutlineModel(**agent_outlines_json)
-    
-#     return presentation_outlines
-
-    
 
 @router.post("/stream")
 async def run_agent(request: Request) -> Response:
@@ -70,12 +49,17 @@ async def run_agent(request: Request) -> Response:
     
     presentation = presentation_cache.get(uuid_id)
     
-    files_content = ""
+    instructions = presentation.content
+    
+    raw_content = ""
     
     for file_path in presentation.file_paths:
         with open(file_path, "r") as file:
-            files_content += file.read()
-    request_data['messages'][0]['content'] = files_content
+            raw_content += file.read()
+            
+    if not raw_content:
+        raw_content = bocha_websearch(query=instructions)
+    request_data['messages'][0]['content'] = raw_content
     try:
         run_input = RunAgentInput.model_validate(request_data)
     except ValidationError as e:  # pragma: no cover
@@ -84,18 +68,8 @@ async def run_agent(request: Request) -> Response:
             media_type='application/json',
             status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
         )
-    event_stream = run_ag_ui(agent, run_input, accept=accept)
+    event_stream = run_ag_ui(outline_agent, run_input, accept=accept, deps={"instructions": instructions})
     
-    # # 使用包装器保存流内容
-    # presentation_outlines = get_outline_from_stream(event_stream)
-    
-    # n_slides_to_generate = presentation.n_slides
-    # presentation_outlines.slides = presentation_outlines.slides[
-    #     :n_slides_to_generate
-    # ]
-
-    # presentation.outlines = presentation_outlines.model_dump()
-    # presentation.title = get_presentation_title_from_outlines(presentation_outlines)
 
 
     return StreamingResponse(event_stream, media_type=accept)

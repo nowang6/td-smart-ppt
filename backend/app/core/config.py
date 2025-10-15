@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     LLM_MODEL: str = ""
     LANGFUSE_PUBLIC_KEY: str = ""
     LANGFUSE_SECRET_KEY: str = ""
+    PEXELS_API_KEY: str = ""
+    BOCHA_API_KEY: str = ""
+    DASHSCOPE_API_KEY: str = ""
     
     class Config:
         env_file = ".env"
