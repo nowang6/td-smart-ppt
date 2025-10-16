@@ -47,10 +47,17 @@ interface DocumentClarificationSlideLayoutProps {
 }
 
 const dynamicSlideLayout: React.FC<DocumentClarificationSlideLayoutProps> = ({ data: slideData }) => {
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
+    
     return (
         <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
-            <div className="bg-blue-800 text-white text-[56px] font-[微软雅黑] leading-[64px] p-4">
+            <div className="bg-blue-800 text-white text-[56px] font-[微软雅黑] leading-[64px] p-4 relative">
                 {slideData?.title || "文档澄清"}
+                <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
             </div>
             <div className="bg-blue-200 text-blue-800 text-[16px] font-[微软雅黑] leading-[24px] p-2 m-2 rounded">
                 {slideData?.subheading || "本页由 FO 填写"}
@@ -79,7 +86,7 @@ const dynamicSlideLayout: React.FC<DocumentClarificationSlideLayoutProps> = ({ d
                 </table>
             </div>
             <div className="text-gray-600 text-[14px] font-[微软雅黑] leading-[20px] absolute bottom-10 left-10">
-                {slideData?.dateString || "09/12/2025"}
+                {slideData?.dateString || today}
             </div>
             <div className="text-gray-600 text-[14px] font-[微软雅黑] leading-[20px] absolute bottom-10 right-10">
                 {slideData?.slideNumber || "9"}

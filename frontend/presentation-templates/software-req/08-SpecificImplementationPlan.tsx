@@ -32,14 +32,22 @@ const dynamicSlideLayout: React.FC<Partial<DynamicSlideLayoutData>> = ({
     date = "09/12/2025",
     slideNumber = "8"
 }) => {
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
     return (
         <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
-            <div className="bg-blue-800 text-white p-4 text-4xl font-semibold font-['Microsoft YaHei']">{title}</div>
+            <div className="bg-blue-800 text-white p-4 text-4xl font-semibold font-['Microsoft YaHei'] relative">
+                {title}
+                <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
+            </div>
             <div className="flex justify-end p-4">
                 <div className="bg-blue-200 text-blue-800 p-2 rounded">{note}</div>
             </div>
             <div className="p-8 text-xl font-['Microsoft YaHei']">{description}</div>
-            <div className="absolute bottom-0 left-0 text-gray-500 p-4">{date}</div>
+            <div className="absolute bottom-0 left-0 text-gray-500 p-4">{date || today}</div>
             <div className="absolute bottom-0 right-0 text-gray-500 p-4">{slideNumber}</div>
         </div>
     )

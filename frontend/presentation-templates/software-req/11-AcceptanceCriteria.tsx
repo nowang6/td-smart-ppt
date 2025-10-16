@@ -26,10 +26,17 @@ const Schema = z.object({
 type AcceptanceCriteriaSlideData = z.infer<typeof Schema>
 
 export const dynamicSlideLayout: React.FC<{ data?: Partial<AcceptanceCriteriaSlideData> }> = ({ data }) => {
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
+    
     return (
         <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
-            <div className="bg-blue-900 text-white p-4 font-['Microsoft YaHei'] text-4xl">
+            <div className="bg-blue-900 text-white p-4 font-['Microsoft YaHei'] text-4xl relative">
                 {data?.title || "验收标准"}
+                <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
             </div>
             <div className="absolute top-4 right-4 bg-blue-200 p-2 rounded font-['Microsoft YaHei'] text-lg">
                 {data?.subtitle || "本页由特性 BBT 负责人填写"}
@@ -38,7 +45,7 @@ export const dynamicSlideLayout: React.FC<{ data?: Partial<AcceptanceCriteriaSli
                 {data?.description || "描述验收标准"}
             </div>
             <div className="absolute bottom-4 left-4 font-['Microsoft YaHei'] text-lg">
-                {data?.date || "09/12/2025"}
+                {data?.date || today}
             </div>
             <div className="absolute bottom-4 right-4 font-['Microsoft YaHei'] text-lg">
                 {data?.number || "11"}

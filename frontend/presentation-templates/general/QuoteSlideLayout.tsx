@@ -3,8 +3,8 @@ import * as z from "zod";
 import { ImageSchema } from '@/presentation-templates/defaultSchemes';
 
 export const layoutId = 'quote-slide'
-export const layoutName = 'Quote'
-export const layoutDescription = 'A slide layout with a heading, inspirational quote, and background image with overlay for text visibility.'
+export const layoutName = '引用幻灯片'
+export const layoutDescription = '一个包含标题、引用和背景图像的幻灯片布局，用于文本可见性。'
 
 const quoteSlideSchema = z.object({
     heading: z.string().min(3).max(60).default('Words of Wisdom').meta({

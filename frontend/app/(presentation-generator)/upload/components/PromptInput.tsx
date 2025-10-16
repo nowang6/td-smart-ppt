@@ -34,7 +34,7 @@ export function PromptInput({
         className={`text-sm text-gray-500 font-inter font-medium ${showHint ? "opacity-100" : "opacity-0"
           }`}
       >
-        提供具体的幻灯片需求细节（例如主题、风格、关键点）以获得更准确的结果
+        提供具体的幻灯片需求细节
       </p>
     </div>
   );

@@ -2,8 +2,8 @@ import React from 'react'
 import * as z from "zod";
 
 export const layoutId = 'table-info-slide'
-export const layoutName = 'Table with Info'
-export const layoutDescription = 'A slide layout with a title at the top, structured table in the middle, and descriptive text at the bottom.'
+export const layoutName = '表格与信息'
+export const layoutDescription = '一个包含标题、结构化表格和描述文本的幻灯片布局。'
 
 const tableInfoSlideSchema = z.object({
     title: z.string().min(3).max(40).default('Market Comparison').meta({

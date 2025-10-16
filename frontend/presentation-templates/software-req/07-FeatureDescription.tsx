@@ -37,6 +37,11 @@ interface CharacteristicDescriptionSlideProps {
 
 const dynamicSlideLayout: React.FC<CharacteristicDescriptionSlideProps> = ({ data: slideData }) => {
     const { title, note, description, bullets, date, pageNumber } = slideData || {}
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
 
     return (
         <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
@@ -45,6 +50,7 @@ const dynamicSlideLayout: React.FC<CharacteristicDescriptionSlideProps> = ({ dat
                 <div className="absolute right-4 top-4 text-white bg-blue-200 text-sm p-2 rounded">
                     {note}
                 </div>
+                <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-20 h-16 w-auto" />
             </div>
             <div className="p-8">
                 <div className="text-[24px] leading-[32px] font-[微软雅黑]">
@@ -59,7 +65,7 @@ const dynamicSlideLayout: React.FC<CharacteristicDescriptionSlideProps> = ({ dat
                 </ul>
             </div>
             <div className="absolute bottom-8 left-8 text-[16px] leading-[20px] font-[微软雅黑]">
-                {date}
+                {date || today}
             </div>
             <div className="absolute bottom-8 right-8 text-[16px] leading-[20px] font-[微软雅黑]">
                 {pageNumber}

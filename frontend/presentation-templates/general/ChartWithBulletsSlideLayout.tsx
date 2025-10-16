@@ -5,31 +5,31 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLe
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, AreaChart, Area, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Cell, ResponsiveContainer } from "recharts";
 
 export const layoutId = 'chart-with-bullets-slide'
-export const layoutName = 'Chart with Bullet Boxes'
-export const layoutDescription = 'A slide layout with title, description, chart on the left and colored bullet boxes with icons on the right. Only choose this if data is available.'
+export const layoutName = '图表与要点'
+export const layoutDescription = '一个包含标题、描述、左侧图表和右侧彩色要点框的幻灯片布局。仅在有数据时选择。'
 
 const barPieLineAreaChartDataSchema = z.object({
     type: z.union([z.literal('bar'), z.literal('pie'), z.literal('line'), z.literal('area')]),
     data: z.array(z.object({
-        name: z.string().meta({ description: "Data point name" }),
-        value: z.number().meta({ description: "Data point value" }),
+        name: z.string().meta({ description: "数据点名称" }),
+        value: z.number().meta({ description: "数据点值" }),
     })).min(2).max(5)
 })
 
 const scatterChartDataSchema = z.object({
     type: z.literal('scatter'),
     data: z.array(z.object({
-        x: z.number().meta({ description: "X coordinate" }),
-        y: z.number().meta({ description: "Y coordinate" }),
+        x: z.number().meta({ description: "X坐标" }),
+        y: z.number().meta({ description: "Y坐标" }),
     })).min(2).max(20)
 })
 
 const chartWithBulletsSlideSchema = z.object({
-    title: z.string().min(3).max(40).default('Market Size').meta({
-        description: "Main title of the slide",
+    title: z.string().min(3).max(40).default('市场规模').meta({
+        description: "幻灯片主标题",
     }),
-    description: z.string().min(10).max(150).default('Businesses face challenges with outdated technology and rising costs, limiting efficiency and growth in competitive markets.').meta({
-        description: "Description text below the title",
+    description: z.string().min(10).max(150).default('企业面临过时技术和成本上升的挑战，限制了在竞争市场中的效率和增长。').meta({
+        description: "标题下方的描述文本",
     }),
     chartData: z.union([barPieLineAreaChartDataSchema, scatterChartDataSchema]).default({
         type: 'scatter',
@@ -43,49 +43,49 @@ const chartWithBulletsSlideSchema = z.object({
     }
     ),
     color: z.string().default('#3b82f6').meta({
-        description: "Primary color for chart elements",
+        description: "图表元素的主色",
     }),
     showLegend: z.boolean().default(false).meta({
-        description: "Whether to show chart legend",
+        description: "是否显示图表图例",
     }),
     showTooltip: z.boolean().default(true).meta({
-        description: "Whether to show chart tooltip",
+        description: "是否显示图表工具提示",
     }),
     bulletPoints: z.array(z.object({
         title: z.string().min(2).max(80).meta({
-            description: "Bullet point title",
+            description: "要点标题",
         }),
         description: z.string().min(10).max(150).meta({
-            description: "Bullet point description",
+            description: "要点描述",
         }),
         icon: IconSchema,
     })).min(1).max(3).default([
         {
-            title: 'Total Addressable Market',
-            description: 'Companies can use TAM to plan future expansion and investment.',
+            title: '总可寻址市场',
+            description: '公司可以使用TAM来规划未来的扩张和投资。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'target market scope'
             }
         },
         {
-            title: 'Serviceable Available Market',
-            description: 'Indicates more measurable market segments for sales efforts.',
+            title: '可服务可用市场',
+            description: '表示更可衡量的市场细分，用于销售努力。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'pie chart analysis'
             }
         },
         {
-            title: 'Serviceable Obtainable Market',
-            description: 'Help companies plan development strategies according to the market.',
+            title: '可服务可获得市场',
+            description: '帮助公司根据市场规划发展战略。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'trending up growth'
             }
         }
     ]).meta({
-        description: "List of bullet points with colored boxes and icons",
+        description: "带彩色框和图标的要点列表",
     })
 })
 
@@ -100,10 +100,10 @@ interface ChartWithBulletsSlideLayoutProps {
 
 const chartConfig = {
     value: {
-        label: "Value",
+        label: "值",
     },
     name: {
-        label: "Name",
+        label: "名称",
     },
 };
 
@@ -216,7 +216,7 @@ const ChartWithBulletsSlideLayout: React.FC<ChartWithBulletsSlideLayoutProps> = 
                 );
 
             default:
-                return <div>Unsupported chart type</div>;
+                return <div>不支持的图表类型</div>;
         }
     };
 
@@ -240,12 +240,12 @@ const ChartWithBulletsSlideLayout: React.FC<ChartWithBulletsSlideLayoutProps> = 
                     <div className="flex-1 flex flex-col pr-8">
                         {/* Title */}
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-                            {slideData?.title || 'Market Size'}
+                            {slideData?.title || '市场规模'}
                         </h1>
 
                         {/* Description */}
                         <p className="text-base text-gray-700 leading-relaxed mb-8">
-                            {slideData?.description || 'Businesses face challenges with outdated technology and rising costs, limiting efficiency and growth in competitive markets.'}
+                            {slideData?.description || '企业面临过时技术和成本上升的挑战，限制了在竞争市场中的效率和增长。'}
                         </p>
 
                         {/* Chart Container */}

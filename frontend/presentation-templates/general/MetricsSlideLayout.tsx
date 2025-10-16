@@ -2,41 +2,41 @@ import React from 'react'
 import * as z from "zod";
 
 export const layoutId = 'metrics-slide'
-export const layoutName = 'Metrics'
-export const layoutDescription = 'A slide layout for showcasing key business metrics with large numbers and descriptive text boxes. This should only be used with metrics and numbers.'
+export const layoutName = '指标幻灯片'
+export const layoutDescription = '一个包含关键业务指标的幻灯片布局，使用大数字和描述文本框展示。仅在有指标和数字时使用。'
 
 const metricsSlideSchema = z.object({
-    title: z.string().min(3).max(100).default('Company Traction').meta({
-        description: "Main title of the slide",
+    title: z.string().min(3).max(100).default('公司进展').meta({
+        description: "幻灯片主标题",
     }),
     metrics: z.array(z.object({
         label: z.string().min(2).max(100).meta({
-            description: "Metric label/title"
+            description: "指标标签/标题"
         }),
         value: z.string().min(1).max(10).meta({
-            description: "Metric value (e.g., 150+, 95%, $2M). No long values. Keep simple number."
+            description: "指标值（例如：150+、95%、$2M）。不要长值。保持简单数字。"
         }),
         description: z.string().min(10).max(150).meta({
-            description: "Detailed description of the metric. Explanation of the metric."
+            description: "指标的详细描述。指标的解释。"
         }),
     })).min(2).max(3).default([
         {
             value: '150+',
-            label: 'Clients Onboarded',
-            description: 'Larana Inc. has successfully built a diverse client base, gaining trust across industries.'
+            label: '客户入驻',
+            description: 'Larana公司成功建立了多元化的客户基础，赢得了跨行业的信任。'
         },
         {
             value: '200+',
-            label: 'projects completed.',
-            description: 'Delivering over 200 projects, Larana Inc. consistently meets evolving client needs.'
+            label: '完成项目',
+            description: '交付超过200个项目，Larana公司始终满足不断变化的客户需求。'
         },
         {
             value: '95%',
-            label: 'client satisfaction.',
-            description: 'With a strong focus on customer success, Larana Inc. has a 95% satisfaction rate.'
+            label: '客户满意度',
+            description: '凭借对客户成功的强烈关注，Larana公司拥有95%的满意度。'
         }
     ]).meta({
-        description: "List of key business metrics to display",
+        description: "要显示的关键业务指标列表",
     })
 })
 
@@ -113,7 +113,7 @@ const MetricsSlideLayout: React.FC<MetricsSlideLayoutProps> = ({ data: slideData
                         {/* Title */}
                         <div className="text-center">
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900">
-                                {slideData?.title || 'Company Traction'}
+                                {slideData?.title || '公司进展'}
                             </h1>
                         </div>
 

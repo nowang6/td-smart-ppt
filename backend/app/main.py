@@ -8,20 +8,20 @@ from pydantic_ai.agent import Agent
  
 from langfuse import Langfuse
 
-langfuse = Langfuse(
-  secret_key=settings.LANGFUSE_SECRET_KEY,
-  public_key=settings.LANGFUSE_PUBLIC_KEY,
-  host="https://hipaa.cloud.langfuse.com"
-)
+# langfuse = Langfuse(
+#   secret_key=settings.LANGFUSE_SECRET_KEY,
+#   public_key=settings.LANGFUSE_PUBLIC_KEY,
+#   host="https://hipaa.cloud.langfuse.com"
+# )
  
-# Verify connection
-if langfuse.auth_check():
-    print("Langfuse client is authenticated and ready!")
-else:
-    print("Authentication failed. Please check your credentials and host.")
+# # Verify connection
+# if langfuse.auth_check():
+#     print("Langfuse client is authenticated and ready!")
+# else:
+#     print("Authentication failed. Please check your credentials and host.")
     
-# Initialize Pydantic AI instrumentation
-Agent.instrument_all()
+# # Initialize Pydantic AI instrumentation
+# Agent.instrument_all()
 
 
 app = FastAPI(

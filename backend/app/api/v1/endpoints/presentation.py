@@ -174,10 +174,11 @@ async def stream_presentation(id: uuid.UUID):
             slide_layout = layout.slides[slide_layout_index]
 
             try:
+                user_instructions = presentation.content
                 slide_content = await get_slide_content_from_type_and_outline(
                     slide_layout,
                     outline.slides[i],
-                    presentation.instructions,
+                    user_instructions,
                 )
             except HTTPException as e:
                 yield SSEErrorResponse(detail=e.detail).to_string()
@@ -337,7 +338,7 @@ async def generate_presentation_structure(
 async def get_slide_content_from_type_and_outline(
     slide_layout: SlideLayoutModel,
     slide_outline: SlideOutlineModel,
-    instructions: Optional[str] = None,
+    user_instructions: str,
 ) -> str:
     response_schema = remove_fields_from_schema(
     slide_layout.json_schema, ["__image_url__", "__icon_url__"]
@@ -362,11 +363,11 @@ async def get_slide_content_from_type_and_outline(
         description="Slide content structure"
     )
     
-    sys_prompt = f"""
+    instructions = f"""
         根据提供的大纲生成结构化幻灯片，遵循以下步骤和注意事项，并输出结构化结果。
         
-        {"# 用户说明:" if instructions else ""}
-        {instructions or ""}
+        {"# 用户指令:" if user_instructions else ""}
+        {user_instructions or ""}
 
         # 步骤
         1. 分析大纲。
@@ -396,6 +397,8 @@ async def get_slide_content_from_type_and_outline(
             }}
     """
     
-    outline_agent = Agent(llm, deps_type=StructureDependencies, system_prompt=sys_prompt, output_type=structured_schema)
-    res = await outline_agent.run(slide_outline.content, deps={"instructions": instructions})
+    outline_agent = Agent(llm, instructions=instructions, output_type=structured_schema)
+    res = await outline_agent.run(slide_outline.content)
     return res.output
+
+

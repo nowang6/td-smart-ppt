@@ -41,6 +41,11 @@ interface FeatureDescriptionSlideLayoutProps {
 
 const dynamicSlideLayout: React.FC<FeatureDescriptionSlideLayoutProps> = ({ data: slideData }) => {
   const items = slideData?.items || []
+  const today = new Date().toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).replace(/\//g, '/')
 
   return (
     <>
@@ -53,6 +58,7 @@ const dynamicSlideLayout: React.FC<FeatureDescriptionSlideLayoutProps> = ({ data
         <header className="bg-blue-800 text-white p-4">
           <h1 className="text-4xl font-bold">{slideData?.title || "特性描述"}</h1>
           <button className="bg-blue-200 text-blue-800 float-right px-4 py-2 rounded">{slideData?.items?.[1] || "本页由 FO 填写"}</button>
+          <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
         </header>
         <section className="p-8">
           <p className="text-xl">{slideData?.description || "描述该特性的需求背景、涉及款型"}</p>
@@ -63,7 +69,7 @@ const dynamicSlideLayout: React.FC<FeatureDescriptionSlideLayoutProps> = ({ data
           </ul>
         </section>
         <footer className="bg-gray-100 text-gray-800 p-4 absolute bottom-0 w-full">
-          <span>{slideData?.footerDate || "09/12/2025"}</span>
+          <span>{slideData?.footerDate || today}</span>
           <span className="float-right">{slideData?.footerPageNumber || "5"}</span>
         </footer>
       </div>

@@ -2,8 +2,8 @@ import React from 'react'
 import * as z from "zod";
 
 export const layoutId = 'table-of-contents-slide'
-export const layoutName = 'Table of Contents'
-export const layoutDescription = 'A professional table of contents layout with numbered sections, and page references. This should be right after introduction slide if ever used.'
+export const layoutName = '目录幻灯片'
+export const layoutDescription = '一个专业的目录幻灯片布局，包含编号部分和页面参考。应该在简介幻灯片后使用。'
 
 const tableOfContentsSlideSchema = z.object({
     sections: z.array(z.object({

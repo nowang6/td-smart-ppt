@@ -33,11 +33,18 @@ interface DynamicSlideLayoutProps {
 }
 
 const dynamicSlideLayout: React.FC<DynamicSlideLayoutProps> = ({ data: slideData }) => {
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
+    
     return (
         <>
             <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
-                <div className="bg-blue-800 text-white text-6xl font-bold font-['Microsoft YaHei'] p-4">
+                <div className="bg-blue-800 text-white text-6xl font-bold font-['Microsoft YaHei'] p-4 relative">
                     {slideData?.title || "交付物列表"}
+                    <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
                 </div>
                 <div className="absolute top-0 right-0 m-4 bg-gray-200 p-2 rounded">
                     {slideData?.note || "本页由 FO 填写"}
@@ -46,7 +53,7 @@ const dynamicSlideLayout: React.FC<DynamicSlideLayoutProps> = ({ data: slideData
                     {slideData?.description || "描述该 Story 的交付物列表及交付模式"}
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center p-4">
-                    <div className="text-gray-600">{slideData?.date || "09/12/2025"}</div>
+                    <div className="text-gray-600">{slideData?.date || today}</div>
                     <div className="text-gray-600">{slideData?.organization || "TD Tech"}</div>
                     <div className="text-gray-600">{slideData?.slideNumber || "10"}</div>
                 </div>

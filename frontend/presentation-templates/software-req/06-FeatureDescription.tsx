@@ -36,10 +36,17 @@ interface FeatureDescriptionSlideLayoutProps {
 }
 
 const dynamicSlideLayout: React.FC<FeatureDescriptionSlideLayoutProps> = ({ data: slideData }) => {
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
+    
     return (
         <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
-            <div className="bg-blue-800 text-white p-4 font-bold text-4xl font-微软雅黑">
+            <div className="bg-blue-800 text-white p-4 font-bold text-4xl font-微软雅黑 relative">
                 {slideData?.title || "特性描述"}
+                <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
             </div>
             <div className="flex justify-end p-4">
                 <div className="bg-blue-200 text-blue-800 p-2 rounded">
@@ -56,7 +63,7 @@ const dynamicSlideLayout: React.FC<FeatureDescriptionSlideLayoutProps> = ({ data
                 <li>{slideData?.configChange || "参数配置"}</li>
             </ul>
             <div className="absolute bottom-0 p-4 text-gray-600 text-sm font-微软雅黑">
-                {slideData?.date || "09/12/2025"}
+                {slideData?.date || today}
             </div>
             <div className="absolute bottom-0 right-0 p-4 text-gray-600 text-sm font-微软雅黑">
                 {slideData?.number || "6"}

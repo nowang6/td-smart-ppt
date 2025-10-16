@@ -3,49 +3,49 @@ import * as z from "zod";
 import { ImageSchema, IconSchema } from '@/presentation-templates/defaultSchemes';
 
 export const layoutId = 'bullet-with-icons-slide'
-export const layoutName = 'Bullet with Icons'
-export const layoutDescription = 'A bullets style slide with main content, supporting image, and bullet points with icons and descriptions.'
+export const layoutName = '带图标要点'
+export const layoutDescription = '一个要点风格的幻灯片，包含主内容、支持图像和带有图标和描述的要点。'
 
 const bulletWithIconsSlideSchema = z.object({
-    title: z.string().min(3).max(40).default('Problem').meta({
-        description: "Main title of the slide",
+    title: z.string().min(3).max(40).default('问题').meta({
+        description: "幻灯片主标题",
     }),
-    description: z.string().max(150).default('Businesses face challenges with outdated technology and rising costs, limiting efficiency and growth in competitive markets.').meta({
-        description: "Main description text explaining the problem or topic",
+    description: z.string().max(150).default('企业面临过时技术和成本上升的挑战，限制了在竞争市场中的效率和增长。').meta({
+        description: "解释问题或主题的主要描述文本",
     }),
     image: ImageSchema.default({
         __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-        __image_prompt__: 'Business people analyzing documents and charts in office'
+        __image_prompt__: '办公室中分析文档和图表的商务人士'
     }).meta({
-        description: "Supporting image for the slide",
+        description: "幻灯片的支持图像",
     }),
     bulletPoints: z.array(z.object({
         title: z.string().min(2).max(80).meta({
-            description: "Bullet point title",
+            description: "要点标题",
         }),
         description: z.string().min(10).max(150).meta({
-            description: "Bullet point description",
+            description: "要点描述",
         }),
         icon: IconSchema,
     })).min(1).max(3).default([
         {
-            title: 'Inefficiency',
-            description: 'Businesses struggle to find digital tools that meet their needs, causing operational slowdowns.',
+            title: '效率低下',
+            description: '企业难以找到满足其需求的数字工具，导致运营放缓。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'warning alert inefficiency'
             }
         },
         {
-            title: 'High Costs',
-            description: 'Outdated systems increase expenses, while small businesses struggle to expand their market reach.',
+            title: '成本高昂',
+            description: '过时的系统增加了开支，而小型企业难以扩大市场覆盖范围。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'trending up costs chart'
             }
         }
     ]).meta({
-        description: "List of bullet points with icons and descriptions",
+        description: "带图标和描述的要点列表",
     })
 })
 
@@ -81,7 +81,7 @@ const BulletWithIconsSlideLayout: React.FC<BulletWithIconsSlideLayoutProps> = ({
                     {/* Title Section - Full Width */}
                     <div className="mb-8">
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900">
-                            {slideData?.title || 'Problem'}
+                            {slideData?.title || '问题'}
                         </h1>
                     </div>
 
@@ -124,7 +124,7 @@ const BulletWithIconsSlideLayout: React.FC<BulletWithIconsSlideLayoutProps> = ({
                         <div className="flex-1 flex flex-col justify-center pl-8 lg:pl-16">
                             {/* Description */}
                             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                                {slideData?.description || 'Businesses face challenges with outdated technology and rising costs, limiting efficiency and growth in competitive markets.'}
+                                {slideData?.description || '企业面临过时技术和成本上升的挑战，限制了在竞争市场中的效率和增长。'}
                             </p>
 
                         {/* Bullet Points */}

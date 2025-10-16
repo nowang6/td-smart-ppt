@@ -3,62 +3,62 @@ import * as z from "zod";
 import { ImageSchema, IconSchema } from '@/presentation-templates/defaultSchemes';
 
 export const layoutId = 'bullet-icons-only-slide'
-export const layoutName = 'Bullet Icons Only'
-export const layoutDescription = 'A slide layout with title, grid of bullet points with icons (no descriptions), and a supporting image.'
+export const layoutName = '仅图标要点'
+export const layoutDescription = '包含标题、带图标的要点网格（无描述）和支持图像的幻灯片布局。'
 
 const bulletIconsOnlySlideSchema = z.object({
-    title: z.string().min(3).max(40).default('Solutions').meta({
-        description: "Main title of the slide",
+    title: z.string().min(3).max(40).default('解决方案').meta({
+        description: "幻灯片主标题",
     }),
     image: ImageSchema.default({
         __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-        __image_prompt__: 'Business professionals collaborating and discussing solutions'
+        __image_prompt__: '商务专业人士协作讨论解决方案'
     }).meta({
-        description: "Supporting image for the slide",
+        description: "幻灯片支持图像",
     }),
     bulletPoints: z.array(z.object({
         title: z.string().min(2).max(80).meta({
-            description: "Bullet point title",
+            description: "要点标题",
         }),
         subtitle: z.string().min(5).max(150).optional().meta({
-            description: "Optional short subtitle or brief explanation",
+            description: "可选的简短副标题或简要说明",
         }),
         icon: IconSchema,
     })).min(2).max(3).default([
         {
-            title: 'Custom Software',
-            subtitle: 'We create tailored software to optimize processes and boost efficiency.',
+            title: '定制软件',
+            subtitle: '我们创建定制软件来优化流程并提高效率。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'code software development'
             }
         },
         {
-            title: 'Digital Consulting',
-            subtitle: 'Our consultants guide organizations in leveraging the latest technologies.',
+            title: '数字咨询',
+            subtitle: '我们的顾问指导组织利用最新技术。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'users consulting team'
             }
         },
         {
-            title: 'Support Services',
-            subtitle: 'We provide ongoing support to help businesses adapt and maintain performance.',
+            title: '支持服务',
+            subtitle: '我们提供持续支持，帮助企业适应并保持性能。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'headphones support service'
             }
         },
         {
-            title: 'Scalable Marketing',
-            subtitle: 'Our data-driven strategies help businesses expand their reach and engagement.',
+            title: '可扩展营销',
+            subtitle: '我们基于数据的策略帮助企业扩大覆盖范围和参与度。',
             icon: {
                 __icon_url__: '/static/icons/placeholder.png',
                 __icon_query__: 'trending up marketing growth'
             }
         }
     ]).meta({
-        description: "List of bullet points with icons and optional subtitles",
+        description: "带图标和可选副标题的要点列表",
     })
 })
 
@@ -118,7 +118,7 @@ const BulletIconsOnlySlideLayout: React.FC<BulletIconsOnlySlideLayoutProps> = ({
                     <div className="flex-1 flex flex-col pr-8">
                         {/* Title */}
                         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8">
-                            {slideData?.title || 'Solutions'}
+                            {slideData?.title || '解决方案'}
                         </h1>
 
                         {/* Bullet Points Grid */}

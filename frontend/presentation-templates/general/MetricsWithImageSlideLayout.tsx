@@ -3,8 +3,8 @@ import * as z from "zod";
 import { ImageSchema } from '@/presentation-templates/defaultSchemes';
 
 export const layoutId = 'metrics-with-image-slide'
-export const layoutName = 'Metrics with Image'
-export const layoutDescription = 'A slide layout with supporting image on the left and title, description, and metrics grid on the right. Can be used alternatively with MetricSlide.'
+export const layoutName = '指标与图像幻灯片'
+export const layoutDescription = '一个包含支持图像的幻灯片布局，左侧为图像，右侧为标题、描述和指标网格。可以替代指标幻灯片使用。'
 
 const metricsWithImageSlideSchema = z.object({
     title: z.string().min(3).max(40).default('Competitive Advantage').meta({   

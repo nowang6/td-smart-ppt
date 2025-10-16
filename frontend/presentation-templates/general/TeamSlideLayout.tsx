@@ -3,8 +3,8 @@ import * as z from "zod";
 import { ImageSchema } from '@/presentation-templates/defaultSchemes';
 
 export const layoutId = 'team-slide'
-export const layoutName = 'Team Slide'
-export const layoutDescription = 'A slide layout showcasing team members with photos, names, positions, and descriptions alongside company information.'
+export const layoutName = '团队幻灯片'
+export const layoutDescription = '展示团队成员照片、姓名、职位和描述以及公司信息的幻灯片布局。'
 
 const teamMemberSchema = z.object({
     name: z.string().min(2).max(50).meta({

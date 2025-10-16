@@ -30,11 +30,18 @@ interface ImpactAnalysisSpaceSlideLayoutProps {
 }
 
 export const dynamicSlideLayout: React.FC<ImpactAnalysisSpaceSlideLayoutProps> = ({ data: slideData }) => {
+    const today = new Date().toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '/')
+    
     return (
         <>
             <div className="relative w-full rounded-sm max-w-[1280px] shadow-lg max-h-[720px] aspect-video bg-white relative z-20 mx-auto overflow-hidden">
-                <div className="bg-blue-800 text-white p-4 text-4xl font-bold font-微软雅黑">
+                <div className="bg-blue-800 text-white p-4 text-4xl font-bold font-微软雅黑 relative">
                     {slideData?.header || "周边影响分析 - 空间"}
+                    <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
                 </div>
                 <div className="p-4">
                     <div className="bg-blue-200 p-2 rounded">
@@ -51,7 +58,7 @@ export const dynamicSlideLayout: React.FC<ImpactAnalysisSpaceSlideLayoutProps> =
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 p-4 text-gray-600">
-                    {slideData?.footerLeft || "09/12/2025"}
+                    {slideData?.footerLeft || today}
                 </div>
                 <div className="absolute bottom-0 right-0 p-4 text-gray-600">
                     {slideData?.footerRight || "12"}

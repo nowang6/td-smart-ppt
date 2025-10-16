@@ -3,8 +3,8 @@ import * as z from "zod";
 import { ImageSchema } from '@/presentation-templates/defaultSchemes';
 
 export const layoutId = 'numbered-bullets-slide'
-export const layoutName = 'Numbered Bullets'
-export const layoutDescription = 'A slide layout with large title, supporting image, and numbered bullet points with descriptions.'
+export const layoutName = '编号要点'
+export const layoutDescription = '一个包含大标题、支持图像和编号要点的幻灯片布局。'
 
 const numberedBulletsSlideSchema = z.object({
     title: z.string().min(3).max(40).default('Market Validation').meta({
