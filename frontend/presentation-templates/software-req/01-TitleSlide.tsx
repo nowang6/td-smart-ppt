@@ -38,7 +38,7 @@ const dynamicSlideLayout: React.FC<SimpleTitleAndFooterSlideLayoutProps> = ({ da
             {slideData?.footerText || "FO："}
           </div>
           <div className="absolute bottom-0 left-0 p-8 text-lg font-[微软雅黑]">
-            {slideData?.date || "09/12/2025"}
+            {slideData?.date || new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/')}
           </div>
           <div className="absolute bottom-0 right-0 p-8 text-lg font-[微软雅黑]">
             {slideData?.pageNumber || "1"}

@@ -25,6 +25,12 @@ const Schema = z.object({
   items: z.array(z.string().min(3).max(40)).min(2).max(4).default(["需求背景", "涉及款型"]).meta({
     description: "List of items or bullet points. Max 4 items",
   }),
+  image: ImageSchema.default({
+    __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    __image_prompt__: '会议室中的商业团队正在讨论产品功能和解决方案'
+  }).meta({
+    description: "幻灯片的支持图片",
+  }),
   footerDate: z.string().min(10).max(20).default("09/12/2025").meta({
     description: "Footer date. Max 10 characters",
   }),
@@ -60,13 +66,27 @@ const dynamicSlideLayout: React.FC<FeatureDescriptionSlideLayoutProps> = ({ data
           <button className="bg-blue-200 text-blue-800 float-right px-4 py-2 rounded">{slideData?.items?.[1] || "本页由 FO 填写"}</button>
           <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
         </header>
-        <section className="p-8">
-          <p className="text-xl">{slideData?.description || "描述该特性的需求背景、涉及款型"}</p>
-          <ul className="list-disc list-inside mt-6">
-            {items.map((item, index) => (
-              <li className="text-xl mt-2" key={index}>{item}</li>
-            ))}
-          </ul>
+        <section className="p-8 flex h-full">
+          {/* Left Section - Content */}
+          <div className="flex-1 pr-8">
+            <p className="text-xl">{slideData?.description || "描述该特性的需求背景、涉及款型"}</p>
+            <ul className="list-disc list-inside mt-6">
+              {items.map((item, index) => (
+                <li className="text-xl mt-2" key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Right Section - Image */}
+          <div className="flex-1 flex items-center justify-center pl-8">
+            <div className="w-full max-w-md h-64 rounded-2xl overflow-hidden shadow-lg">
+              <img
+                src={slideData?.image?.__image_url__ || ''}
+                alt={slideData?.image?.__image_prompt__ || slideData?.title || ''}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </section>
         <footer className="bg-gray-100 text-gray-800 p-4 absolute bottom-0 w-full">
           <span>{slideData?.footerDate || today}</span>

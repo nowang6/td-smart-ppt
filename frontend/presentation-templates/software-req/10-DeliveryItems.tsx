@@ -1,6 +1,15 @@
 import React from 'react'
 import { z } from 'zod'
 
+const ImageSchema = z.object({
+  __image_url__: z.url().meta({
+    description: "URL to image",
+  }),
+  __image_prompt__: z.string().meta({
+    description: "Prompt used to generate the image. Max 30 words",
+  }).min(10).max(50),
+})
+
 const layoutId = "delivery-items-slide"
 const layoutName = "DynamicSlideLayout"
 const layoutDescription = "A slide with a title, description, and footer details."
@@ -14,6 +23,12 @@ const Schema = z.object({
     }),
     description: z.string().min(5).max(200).default("描述该 Story 的交付物列表及交付模式").meta({
         description: "Main description of the slide. Max 200 characters",
+    }),
+    image: ImageSchema.default({
+        __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+        __image_prompt__: '会议室中的商业团队正在讨论产品功能和解决方案'
+    }).meta({
+        description: "幻灯片的支持图片",
     }),
     date: z.string().max(11).default("09/12/2025").meta({
         description: "Date on the slide. Max 11 characters",
@@ -49,8 +64,24 @@ const dynamicSlideLayout: React.FC<DynamicSlideLayoutProps> = ({ data: slideData
                 <div className="absolute top-0 right-0 m-4 bg-gray-200 p-2 rounded">
                     {slideData?.note || "本页由 FO 填写"}
                 </div>
-                <div className="text-2xl font-['Microsoft YaHei'] text-center my-16">
-                    {slideData?.description || "描述该 Story 的交付物列表及交付模式"}
+                <div className="flex h-full px-8">
+                    {/* Left Section - Content */}
+                    <div className="flex-1 flex items-center justify-center pr-8">
+                        <div className="text-2xl font-['Microsoft YaHei'] text-center">
+                            {slideData?.description || "描述该 Story 的交付物列表及交付模式"}
+                        </div>
+                    </div>
+                    
+                    {/* Right Section - Image */}
+                    <div className="flex-1 flex items-center justify-center pl-8">
+                        <div className="w-full max-w-md h-64 rounded-2xl overflow-hidden shadow-lg">
+                            <img
+                                src={slideData?.image?.__image_url__ || ''}
+                                alt={slideData?.image?.__image_prompt__ || slideData?.title || ''}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center p-4">
                     <div className="text-gray-600">{slideData?.date || today}</div>

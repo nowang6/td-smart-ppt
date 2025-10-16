@@ -1,6 +1,15 @@
 import React from 'react'
 import { z } from 'zod'
 
+const ImageSchema = z.object({
+  __image_url__: z.url().meta({
+    description: "URL to image",
+  }),
+  __image_prompt__: z.string().meta({
+    description: "Prompt used to generate the image. Max 30 words",
+  }).min(10).max(50),
+})
+
 const layoutId = "characteristic-description-slide"
 const layoutName = "CharacteristicDescriptionSlide"
 const layoutDescription = "A slide with a title, description, list items, and footer text."
@@ -20,6 +29,12 @@ const Schema = z.object({
         "相关规格"
     ]).meta({
         description: "List of bullet points. Max 2 items"
+    }),
+    image: ImageSchema.default({
+        __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+        __image_prompt__: '会议室中的商业团队正在讨论产品功能和解决方案'
+    }).meta({
+        description: "幻灯片的支持图片",
     }),
     date: z.string().min(1).max(15).default("09/12/2025").meta({
         description: "Date in the bottom left corner. Max 1 word"
@@ -52,17 +67,31 @@ const dynamicSlideLayout: React.FC<CharacteristicDescriptionSlideProps> = ({ dat
                 </div>
                 <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-20 h-16 w-auto" />
             </div>
-            <div className="p-8">
-                <div className="text-[24px] leading-[32px] font-[微软雅黑]">
-                    {description}
+            <div className="p-8 flex h-full">
+                {/* Left Section - Content */}
+                <div className="flex-1 pr-8">
+                    <div className="text-[24px] leading-[32px] font-[微软雅黑]">
+                        {description}
+                    </div>
+                    <ul className="list-disc pl-6 mt-6">
+                        {bullets?.map((bullet: string, index: number) => (
+                            <li key={index} className="text-[20px] leading-[24px] font-[微软雅黑]">
+                                {bullet}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                <ul className="list-disc pl-6 mt-6">
-                    {bullets?.map((bullet: string, index: number) => (
-                        <li key={index} className="text-[20px] leading-[24px] font-[微软雅黑]">
-                            {bullet}
-                        </li>
-                    ))}
-                </ul>
+                
+                {/* Right Section - Image */}
+                <div className="flex-1 flex items-center justify-center pl-8">
+                    <div className="w-full max-w-md h-64 rounded-2xl overflow-hidden shadow-lg">
+                        <img
+                            src={slideData?.image?.__image_url__ || ''}
+                            alt={slideData?.image?.__image_prompt__ || slideData?.title || ''}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
             </div>
             <div className="absolute bottom-8 left-8 text-[16px] leading-[20px] font-[微软雅黑]">
                 {date || today}

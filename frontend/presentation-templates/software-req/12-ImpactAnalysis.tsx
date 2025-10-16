@@ -1,6 +1,15 @@
 import React from 'react'
 import { z } from 'zod'
 
+const ImageSchema = z.object({
+  __image_url__: z.url().meta({
+    description: "URL to image",
+  }),
+  __image_prompt__: z.string().meta({
+    description: "Prompt used to generate the image. Max 30 words",
+  }).min(10).max(50),
+})
+
 const layoutId = "impact-analysis-space-slide"
 const layoutName = "Impact Analysis Space"
 const layoutDescription = "A slide with a header, two highlighted text sections, and footer information."
@@ -14,6 +23,12 @@ const Schema = z.object({
     }),
     secondSectionText: z.string().min(10).max(512).default("是否涉及文件生成、删除、存储路径修改等操作？是否具备空间清理机制？当前代码逻辑是否会产生孤立文件（空间清除机制无法删除的文件）？是否会因文件存储占满导致系统升级包无法下载？请确保涉及此次业务的文件存储不影响版本升级。").meta({
         description: "Second highlighted section text. Max 64 words"
+    }),
+    image: ImageSchema.default({
+        __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+        __image_prompt__: '会议室中的商业团队正在讨论产品功能和解决方案'
+    }).meta({
+        description: "幻灯片的支持图片",
     }),
     footerLeft: z.string().min(1).max(16).default("09/12/2025").meta({
         description: "Left footer content"
@@ -43,18 +58,30 @@ export const dynamicSlideLayout: React.FC<ImpactAnalysisSpaceSlideLayoutProps> =
                     {slideData?.header || "周边影响分析 - 空间"}
                     <img src="/td-tech.png" alt="TD Tech Logo" className="absolute top-4 right-4 h-16 w-auto" />
                 </div>
-                <div className="p-4">
-                    <div className="bg-blue-200 p-2 rounded">
-                        <p className="text-lg font-微软雅黑">
-                            {slideData?.firstSectionText || "是否会占用过大的内存空间？代码段影响是否受控？是否内存泄露？超过 64K 需要专题说明。"}
-                        </p>
+                <div className="p-4 flex h-full">
+                    {/* Left Section - Content */}
+                    <div className="flex-1 pr-8">
+                        <div className="bg-blue-200 p-2 rounded mb-4">
+                            <p className="text-lg font-微软雅黑">
+                                {slideData?.firstSectionText || "是否会占用过大的内存空间？代码段影响是否受控？是否内存泄露？超过 64K 需要专题说明。"}
+                            </p>
+                        </div>
+                        <div className="bg-blue-200 p-2 rounded">
+                            <p className="text-lg font-微软雅黑">
+                                {slideData?.secondSectionText || "是否涉及文件生成、删除、存储路径修改等操作？是否具备空间清理机制？当前代码逻辑是否会产生孤立文件（空间清除机制无法删除的文件）？是否会因文件存储占满导致系统升级包无法下载？请确保涉及此次业务的文件存储不影响版本升级。"}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div className="p-4">
-                    <div className="bg-blue-200 p-2 rounded">
-                        <p className="text-lg font-微软雅黑">
-                            {slideData?.secondSectionText || "是否涉及文件生成、删除、存储路径修改等操作？是否具备空间清理机制？当前代码逻辑是否会产生孤立文件（空间清除机制无法删除的文件）？是否会因文件存储占满导致系统升级包无法下载？请确保涉及此次业务的文件存储不影响版本升级。"}
-                        </p>
+                    
+                    {/* Right Section - Image */}
+                    <div className="flex-1 flex items-center justify-center pl-8">
+                        <div className="w-full max-w-md h-64 rounded-2xl overflow-hidden shadow-lg">
+                            <img
+                                src={slideData?.image?.__image_url__ || ''}
+                                alt={slideData?.image?.__image_prompt__ || slideData?.header || ''}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="absolute bottom-0 left-0 p-4 text-gray-600">

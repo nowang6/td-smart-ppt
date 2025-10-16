@@ -1,6 +1,15 @@
 import React from 'react'
 import { z } from 'zod'
 
+const ImageSchema = z.object({
+  __image_url__: z.url().meta({
+    description: "URL to image",
+  }),
+  __image_prompt__: z.string().meta({
+    description: "Prompt used to generate the image. Max 30 words",
+  }).min(10).max(50),
+})
+
 const layoutId = "document-clarification-slide"
 const layoutName = "DocumentClarificationSlide"
 const layoutDescription = "A slide layout for displaying document clarification details."
@@ -32,6 +41,12 @@ const Schema = z.object({
     ]).meta({
         description: "List of documents"
     }),
+    image: ImageSchema.default({
+        __image_url__: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+        __image_prompt__: '会议室中的商业团队正在讨论产品功能和解决方案'
+    }).meta({
+        description: "幻灯片的支持图片",
+    }),
     dateString: z.string().min(1).max(20).default("09/12/2025").meta({
         description: "Date displayed on the slide"
     }),
@@ -62,28 +77,44 @@ const dynamicSlideLayout: React.FC<DocumentClarificationSlideLayoutProps> = ({ d
             <div className="bg-blue-200 text-blue-800 text-[16px] font-[微软雅黑] leading-[24px] p-2 m-2 rounded">
                 {slideData?.subheading || "本页由 FO 填写"}
             </div>
-            <div className="text-[24px] font-[微软雅黑] leading-[32px] mt-10 ml-10">
-                {slideData?.description || "和 Story 相关的文档、资料的准备情况："}
-            </div>
-            <div className="bg-gray-200 rounded overflow-hidden mt-4 ml-10 mr-10">
-                <table className="w-full bg-white">
-                    <thead>
-                        <tr className="text-[16px] font-[微软雅黑] leading-[24px] text-left text-gray-800">
-                            <th className="px-4 py-2 w-1/6">序号</th>
-                            <th className="px-4 py-2 w-2/6">文档 / 资料名称</th>
-                            <th className="px-4 py-2 w-3/6">归档路径</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {slideData?.documents?.map((doc: any, index: number) => (
-                            <tr key={index} className="text-[16px] font-[微软雅黑] leading-[24px] text-left text-gray-800">
-                                <td className="px-4 py-2 w-1/6">{doc?.number || (index + 1).toString()}</td>
-                                <td className="px-4 py-2 w-2/6">{doc?.name || ""}</td>
-                                <td className="px-4 py-2 w-3/6">{doc?.path || ""}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div className="flex h-full mt-4 ml-10 mr-10">
+                {/* Left Section - Content */}
+                <div className="flex-1 pr-8">
+                    <div className="text-[24px] font-[微软雅黑] leading-[32px] mt-6">
+                        {slideData?.description || "和 Story 相关的文档、资料的准备情况："}
+                    </div>
+                    <div className="bg-gray-200 rounded overflow-hidden mt-4">
+                        <table className="w-full bg-white">
+                            <thead>
+                                <tr className="text-[16px] font-[微软雅黑] leading-[24px] text-left text-gray-800">
+                                    <th className="px-4 py-2 w-1/6">序号</th>
+                                    <th className="px-4 py-2 w-2/6">文档 / 资料名称</th>
+                                    <th className="px-4 py-2 w-3/6">归档路径</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {slideData?.documents?.map((doc: any, index: number) => (
+                                    <tr key={index} className="text-[16px] font-[微软雅黑] leading-[24px] text-left text-gray-800">
+                                        <td className="px-4 py-2 w-1/6">{doc?.number || (index + 1).toString()}</td>
+                                        <td className="px-4 py-2 w-2/6">{doc?.name || ""}</td>
+                                        <td className="px-4 py-2 w-3/6">{doc?.path || ""}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                {/* Right Section - Image */}
+                <div className="flex-1 flex items-center justify-center pl-8">
+                    <div className="w-full max-w-md h-64 rounded-2xl overflow-hidden shadow-lg">
+                        <img
+                            src={slideData?.image?.__image_url__ || ''}
+                            alt={slideData?.image?.__image_prompt__ || slideData?.title || ''}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
             </div>
             <div className="text-gray-600 text-[14px] font-[微软雅黑] leading-[20px] absolute bottom-10 left-10">
                 {slideData?.dateString || today}
