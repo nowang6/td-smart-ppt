@@ -2,7 +2,6 @@
 import React, { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useLayout } from "../context/LayoutContext";
-import EditableLayoutWrapper from "../components/EditableLayoutWrapper";
 import SlideErrorBoundary from "../components/SlideErrorBoundary";
 import TiptapTextReplacer from "../components/TiptapTextReplacer";
 import { updateSlideContent } from "../../../store/slices/presentationGeneration";
@@ -29,7 +28,7 @@ export const useGroupLayouts = () => {
     };
   }, [getLayoutsByGroup]);
 
-  // Render slide content with group validation, automatic Tiptap text editing, and editable images/icons
+  // Render slide content with group validation and automatic Tiptap text editing
   const renderSlideContent = useMemo(() => {
     return (slide: any, isEditMode: boolean) => {
      
@@ -54,36 +53,30 @@ export const useGroupLayouts = () => {
 
       if (isEditMode) {
         return (
-          <EditableLayoutWrapper
-            slideIndex={slide.index}
+          <TiptapTextReplacer
+            key={slide.id}
             slideData={slide.content}
-            properties={slide.properties}
+            slideIndex={slide.index}
+            onContentChange={(
+              content: string,
+              dataPath: string,
+              slideIndex?: number
+            ) => {
+              if (dataPath && slideIndex !== undefined) {
+                dispatch(
+                  updateSlideContent({
+                    slideIndex: slideIndex,
+                    dataPath: dataPath,
+                    content: content,
+                  })
+                );
+              }
+            }}
           >
-            <TiptapTextReplacer
-              key={slide.id}
-              slideData={slide.content}
-              slideIndex={slide.index}
-              onContentChange={(
-                content: string,
-                dataPath: string,
-                slideIndex?: number
-              ) => {
-                if (dataPath && slideIndex !== undefined) {
-                  dispatch(
-                    updateSlideContent({
-                      slideIndex: slideIndex,
-                      dataPath: dataPath,
-                      content: content,
-                    })
-                  );
-                }
-              }}
-            >
-              <SlideErrorBoundary label={`Slide ${slide.index + 1}`}>
-                <Layout data={slide.content} />
-              </SlideErrorBoundary>
-            </TiptapTextReplacer>
-          </EditableLayoutWrapper>
+            <SlideErrorBoundary label={`Slide ${slide.index + 1}`}>
+              <Layout data={slide.content} />
+            </SlideErrorBoundary>
+          </TiptapTextReplacer>
         );
       }
       return (

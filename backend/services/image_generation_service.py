@@ -82,3 +82,15 @@ class ImageGenerationService:
             data = await response.json()
             image_url = data["photos"][0]["src"]["large"]
             return image_url
+
+
+async def main():
+    """简单的图像生成测试"""
+    service = ImageGenerationService(output_directory="/tmp")
+    prompt = ImagePrompt(prompt="nature")
+    result = await service.generate_image(prompt)
+    print(f"生成结果: {result}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -159,20 +159,20 @@ const SlideContent = ({ slide, index, presentationId }: SlideContentProps) => {
               </div>
             </ToolTip>
           )}
-          {/* Speaker Notes */}
+          {/* 演讲者备注 */}
           {!isStreaming && slide?.speaker_note && (
             <div className="absolute top-2 z-20 sm:top-4 right-8 sm:right-12 hidden md:block transition-transform">
               <Popover>
                 <PopoverTrigger asChild>
                   <div className=" cursor-pointer ">
-                    <ToolTip content="Show speaker notes">
+                    <ToolTip content="显示演讲者备注">
                       <StickyNote className="text-xl text-gray-500" />
                     </ToolTip>
                   </div>
                 </PopoverTrigger>
                 <PopoverContent side="left" align="start" sideOffset={10} className="w-[320px] z-30">
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold text-gray-600">Speaker notes</p>
+                    <p className="text-xs font-semibold text-gray-600">演讲者备注</p>
                     <div className="text-sm text-gray-800 whitespace-pre-wrap max-h-64 overflow-auto">
                       {slide.speaker_note}
                     </div>
